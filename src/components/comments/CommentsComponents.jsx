@@ -56,13 +56,13 @@ function CommentComponents({postId}) {
     <>
      <div className='comments'>
         <div className='write'>
-        <img src='https://images.pexels.com/photos/10365586/pexels-photo-10365586.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1' alt="" />
+        {comment.userId ?<img src={comment.userId.profilePicture} alt=''/>:<img src='https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png?20150327203541' alt=''/>}
         <input type='text' value={comment} onChange={(event) => setComment(event.target.value)} placeholder='write a comment' />
         <button onClick={postComment} >Send</button>
         </div>
         {allComments?.map((comment)=>(
             <div className='comment'>
-                <img src={comment.userId.profilePicture} alt=''/>
+                {comment.userId ?<img src={comment.userId.profilePicture} alt=''/>:<img src='https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png?20150327203541' alt=''/>}
                 <div className='info'>
                 <span>{comment.userId.firstName}</span>
                 <p>{comment.content}</p>

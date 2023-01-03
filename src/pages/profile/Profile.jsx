@@ -3,73 +3,35 @@ import './profile.scss'
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth'
 import MoreVertIcon from '@mui/icons-material/MoreVert'
 import Posts from '../../components/posts/Posts'
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import axios from 'axios'
 import ProfileEditModal from '../../components/profileEditModal/ProfileEditModal'
 import { useParams } from 'react-router-dom'
 import FollowButton from '../../components/followComponents/FollowButton'
 import {  setUser } from '../../features/auth/authSlice'
+import Viewfollowers from '../../components/friendsList/viewFollowList/Viewfollowers'
+import Viewfollowing from '../../components/friendsList/viewFollowList/Viewfollowing'
+import FollowList from '../../components/friendsList/viewFollowList/FollowList'
 
 function Profile() {
   const [getProfile, setGetProfile] = useState({})
 
-  // const [following, setFollowing] = useState(false)
+  const [followingList, setFollowingList] = useState(false)
+  const [followersList, setFollowersList] = useState(false)
 
   const [profileEdit, setProfileEdit] = useState(false)
 
-  // const [followCheck, setFollowCheck ] = useState({})
-
-  // const [followCount, setfollowCount] = useState()
-
-  // const [userPost, setUserPost] = useState()
+ 
   
  const profile =  localStorage.getItem('profileId')
  const {id} = useParams()
 
 
  const userPostShow =  useSelector(state => state)
- console.log(userPostShow,'userPostShow');
  
   const userId = useSelector(state => state.auth.newUser)
-  const user = userId._id
-const dispatch = useDispatch()
+  const user = userId._id;
 
-  // const follow = ()=>{
-  //   axios.patch('http://localhost:3001/profile/follow',{
-  //         profile,user
-  //   }).then((response)=>{
-  //     if (response.data.followingUser) {
-  //       setFollowing(true)
-  //       setfollowCount(followCount+1)
-  //     }else {
-  //       setFollowing(false)
-  //       setfollowCount(followCount-1)
-  //     }
-  //   })
-  // }
-
-
-
-
-
-  // const userid = userId._id
-  // useEffect(()=>{
-  //   axios.get(`http://localhost:3001/getUsers/${userid}`).then((response)=>{
-  //     if(response.data){
-  //       setFollowCheck(response.data.newUser)
-  //     }
-      
-  //   })
-  //   axios.get('http://localhost:3001/profile/userPost').then((response)=>{
-  //           setUserPost(response.data)
-  //       })
-  // },[])
-
-  // console.log(userPost,"userpost");
-
-  // useEffect(()=>{
-  //   {followCheck?.following?.includes(profile)? setFollowing(true):setFollowing(false)}
-  // },[followCheck])
 
 
   const profileGet =async () => {
@@ -77,15 +39,7 @@ const dispatch = useDispatch()
       setGetProfile(response.data)
     })
   }
-  const UserInfo = ()=>{
-     axios.get(`http://localhost:3001/profile/${user}`).then((response)=>{
-      console.log(response.data,"OOOOOOOOOOOOOOOOOOOOOO")
-    // if(response.data)  dispatch(setUser(response.data))
-  })
-  }
-useEffect(()=>
-{UserInfo()
-},[])
+ 
   
   useEffect(()=>{
 profileGet()
@@ -107,7 +61,7 @@ profileGet()
           alt=""
           className="profilePic"
         />):(<img
-          src='https://www.clipartmax.com/png/middle/296-2969961_no-image-user-profile-icon.png'
+          src='https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png?20150327203541'
           alt=""
           className="profilePic"
         />)}
@@ -152,12 +106,12 @@ profileGet()
                 </span>
               </div>
               <div className="following">
-                <span>
+                <span onClick={()=> setFollowingList(true)} >
                   {getProfile?.following?.length} Following
                 </span>
               </div>
               <div className="followers">
-                <span>
+                <span onClick={()=> setFollowersList(true)}>
                   {getProfile?.followers?.length} Followers
                 </span>
               </div>
@@ -166,6 +120,9 @@ profileGet()
         </div>
         <Posts />
       {profileEdit && <ProfileEditModal  open={profileEdit} close={setProfileEdit}/>}
+      {followersList && <Viewfollowers  open={followersList} close={setFollowersList} Viewfollowers={true} />}
+      {followingList && <Viewfollowers  open={followingList} close={setFollowingList} Viewfollowing={true}/>}
+      
       </div>
     </div>
   )

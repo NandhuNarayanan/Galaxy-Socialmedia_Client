@@ -17,19 +17,14 @@ function FollowButton({followUserId,isFollowed}) {
   const userId = useSelector(state => state.auth.newUser)
   const user = userId._id
 
-console.log(following,'suggetionfollowing');
   const follow = (followUserId)=>{
-    console.log('asdaas');
       axios.patch('http://localhost:3001/profile/follow',{
       followUserId,user
       }).then((response)=>{
-        console.log(response,"respomse");
         if (response.data.followingUser) {
-          console.log("follow respomse");
           setFollowing(true)
           setfollowCount(followCount+1)
         }else {
-          console.log("unffollow respomse");
           setFollowing(false)
           setfollowCount(followCount-1)
         }
@@ -38,7 +33,6 @@ console.log(following,'suggetionfollowing');
 
     const userid = userId._id
     useEffect(()=>{
-      console.log('qqqqq');
       axios.get(`http://localhost:3001/getUsers/${userid}`).then((response)=>{
         if(response.data){
           setFollowCheck(response.data.newUser)
@@ -46,10 +40,8 @@ console.log(following,'suggetionfollowing');
         
       })
     },[])
-    console.log(userPost,"userpost");
     
   useEffect(()=>{
-    console.log('poiu');
     {followCheck?.following?.includes(profile)? setFollowing(true):setFollowing(false)}
     
   },[followCheck])

@@ -100,8 +100,7 @@ function profileEditModal({ open, close }) {
   const [bio, setBio] = useState()
   const [location, setLocation] = useState()
   const [gender, setGender] = useState()
-
-  console.log(fname,bio,location,gender,"adadasfdssdgs");
+  
   const profileCoverRef = useRef()
 
   const CloudinaryRef = useRef()
@@ -120,7 +119,6 @@ function profileEditModal({ open, close }) {
         user
       })
       .then((response) => {
-        console.log(response)
         setFname(response.data.userInfo.firstName)
         setBio(response.data.userInfo.bio)
         setLocation(response.data.userInfo.location)
@@ -153,7 +151,6 @@ function profileEditModal({ open, close }) {
               user,
             })
             .then((response) => {
-              console.log(response, 'profilepicccc')
               setProfilePicture(response.data.profileUpdate.profilePicture)
             })
         }

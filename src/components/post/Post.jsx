@@ -63,7 +63,7 @@ function Post({ post }) {
             src={post.userId.profilePicture}
             alt=""
           />:<img
-          src="https://www.clipartmax.com/png/middle/296-2969961_no-image-user-profile-icon.png"
+          src="https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png?20150327203541"
           alt=""
         />}
             <div className="details">

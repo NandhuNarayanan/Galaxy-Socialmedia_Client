@@ -1,7 +1,6 @@
 import React from 'react'
 
 function Notifications({notificationPost}) {
-    console.log(notificationPost?notificationPost.userId!=undefined?notificationPost.userId:"not":'not come','--------------------');
   return (
     <>
          <img

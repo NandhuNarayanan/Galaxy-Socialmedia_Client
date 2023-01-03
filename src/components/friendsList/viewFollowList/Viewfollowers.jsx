@@ -1,12 +1,14 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
-import AllUser from './AllUser';
 import './viewFollowers.scss'
-import FollowButton from '../followComponents/FollowButton';
 import { useSelector } from 'react-redux';
 import { XboxX } from 'tabler-icons-react';
+import FollowButton from '../../followComponents/FollowButton';
+import FollowList from './FollowList';
+import axios from 'axios';
+import { useParams } from 'react-router-dom';
 
 
 const style = {
@@ -24,9 +26,24 @@ const style = {
   
 
 
-function Viewfollowers({open,close}) {
-const user = useSelector(state => state.auth.newUser)
+function Viewfollowers({open,close,Viewfollowers,Viewfollowing, userFollowers}) {
+  console.log(Viewfollowers,'userFollowers');
+
+const [userList , setUserList] = useState([])
+const [userFollowingList , setUserFollowingList] = useState([])
+const id = useSelector(state => state.auth.newUser._id)
+const profileId =  localStorage.getItem('profileId')
+
+useEffect(()=>{
+    axios.get(`http://localhost:3001/profile/userList/${profileId}`).then((response)=>{
+        console.log(response,'userlist')
+        setUserList(response.data.followersList)
+        setUserFollowingList(response.data.followingList)
+
+    }).catch((e)=>console.log(e,"o"))
+},[])
    
+console.log(userList,"userList");
   return (
     <>
       <Modal
@@ -36,24 +53,52 @@ const user = useSelector(state => state.auth.newUser)
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-            <div className='followHeader'>
-            <h2>Followers</h2>
+        <div className='followHeader'>
+          <h2>{Viewfollowers ? "Followers" : 'Following'}</h2>
             <XboxX onClick={()=> close(false)}/>
             </div>
+            {Viewfollowers ?userList?.length < 1 ? <h1>No Followers</h1> : null : null}
+            {Viewfollowing ?userFollowingList?.length < 1 ? <h1>No Following</h1> : null : null}
+
+        { Viewfollowers ? userList?.map((userFollowing)=>(
+          <>
         <div className="followUser">
       <div className="followUserInfo">
-        {user.profilePicture?<img
-          src={user.profilePicture}
+      <img
+          src={userFollowing?.profilePicture?userFollowing.profilePicture:"https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png?20150327203541"}
           alt=""
-        />:<img
-        src="https://www.clipartmax.com/png/middle/296-2969961_no-image-user-profile-icon.png"
-        alt=""
-      />}
-        <span>{user.firstName}</span>
+        />
+        <span>{userFollowing.firstName}</span>
       </div>
       <div className="followButtons">
+       <FollowButton/>
       </div>
-    </div>
+    </div> 
+    </>
+    )) :
+
+
+    userFollowingList?.map((userFollowing)=>(
+      <>
+       
+    <div className="followUser">
+  <div className="followUserInfo">
+  <img
+          src={userFollowing?.profilePicture?userFollowing.profilePicture:"https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png?20150327203541"}
+          alt=""
+        />
+    <span>{userFollowing?.firstName}</span>
+  </div>
+  <div className="followButtons">
+   <FollowButton/>
+  </div>
+</div> 
+</>
+))
+
+     }
+
+
         </Box>
       </Modal>
     </>
