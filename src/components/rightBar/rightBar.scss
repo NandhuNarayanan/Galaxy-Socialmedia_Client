@@ -1,0 +1,101 @@
+@import '../../style.scss';
+
+.rightBar {
+  @include themify($themes) {
+    flex: 3;
+    top: 0px;
+    position: sticky;
+    overflow: scroll;
+    height: calc(100vh - 0px);
+    background-color: themed(bgSoft);
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+    .container {
+      padding: 20px;
+
+      .item {
+        border-radius: 2%;
+
+        -webkit-box-shadow: 0 6px 4px -6px themed('textColorSoft');
+        -moz-box-shadow: 0 6px 4px -6px themed('textColorSoft');
+        box-shadow: 0 6px 4px -6px themed('textColorSoft');
+        padding: 20px;
+        margin-bottom: 20px;
+        background-color: themed(bg);
+
+        .suggestion {
+          font-size: 14px;
+        }
+
+        span {
+          color: themed('textColorsoft');
+        }
+        .user {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          flex-direction: column;
+          margin: 20px 0px;
+
+          .userInfo {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            position: relative;
+            font-size: 13px;
+
+            img {
+              width: 40px;
+              height: 40px;
+              border-radius: 50%;
+              object-fit: cover;
+            }
+            .online {
+              width: 12px;
+              height: 12px;
+              border-radius: 50%;
+              background-color: limegreen;
+              position: absolute;
+              top: 0;
+              left: 30px;
+            }
+
+            p {
+              color: themed('textColorsoft');
+              gap: 10px;
+            }
+            span {
+              font-weight: 500;
+              color: themed('textColor');
+            }
+          }
+          .buttons {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+
+            .cancel {
+              width: 40px;
+            }
+
+            button {
+              border: none;
+              border-radius: 20px;
+              padding: 5px;
+              color: white;
+              cursor: pointer;
+              font-size: 12px;
+              width: 80px;
+
+              &:first-child {
+                background-color: darkgreen;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

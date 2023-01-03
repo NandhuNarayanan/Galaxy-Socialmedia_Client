@@ -1,0 +1,80 @@
+@import "../../style.scss";
+
+.leftBar{
+    @include themify($themes){
+    flex: 2;
+    position: sticky;
+    top: 0px;
+    height: calc(100vh - 0px);
+    background-color: themed("bg");
+    color: themed("textColor");
+    .container{
+        padding: 20px;
+       .menu{
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        .item{
+            display: flex;
+            align-items:center ;
+            
+            gap: 18px;
+            font-size:30px;
+            
+            .logoImg{
+                flex-direction: row;
+                width: 60px;
+                height: 60px;
+            }
+            
+                .logo{
+                    display: flex;
+                    align-items: center;
+                    font-family: 'Courier New', Courier, monospace;
+                    font-size: 30px;
+                    font-weight: 500;
+                    justify-content: center;
+                    color: themed("logo");
+                    flex-direction: row;
+                }
+                span{
+                    cursor: pointer;
+                    font-size: 16px;
+                }
+                
+            
+        }
+        .user{
+            display: flex;
+            align-items:center ;
+            gap: 18px;
+            img{
+                width: 30px;
+                height: 30px;
+                border-radius: 50%;
+                object-fit: cover;
+            }
+            span{
+                cursor: pointer;
+                font-size: 16px;
+            } 
+        }
+        .menu-bar{
+            display: flex;
+            align-items:center ;
+            gap: 10px;
+
+            margin-top: 200px;
+
+            
+            span{
+                cursor: pointer;
+                font-size: 20px;
+
+            }
+        }
+       } 
+    }
+}
+
+}

@@ -1,0 +1,120 @@
+@import '../../style.scss';
+
+.profile {
+  @include themify($themes) {
+    background-color: themed('bgSoft');
+
+    .images {
+      width: 100%;
+      height: 300px;
+      position: relative;
+      flex-direction: column;
+      
+      .cover {
+        width: 100%;
+        height: 100%;
+      }
+      .profilePic {
+        width: 180px;
+        height: 180px;
+        border-radius: 50%;
+        object-fit: cover;
+        position: absolute;
+        left: 0;
+        right: 0;
+        margin: auto;
+        top: 200px;
+      }
+    }
+    .profileContainer {
+        padding: 25px 50px ;
+        
+      .urInfo {
+        height: 180px;
+        -webkit-box-shadow: 0px 0px 25px -10px rgba(0, 0, 0, 0.38);
+        -moz-box-shadow: 0px 0px 25px -10px rgba(0, 0, 0, 0.38);
+        box-shadow: 0px 0px 25px -10px rgba(0, 0, 0, 0.38);
+        border-radius: 20px;
+        background-color: themed('bg');
+        color: themed('textColor');
+        padding: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 30px;
+
+        .left{
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 7px;
+
+            span{
+                font-size: 20px;
+                font-weight: 500;
+            }
+
+            p{
+                width: 100%;
+                font-size: 13px;
+                font-weight: 400; 
+            }
+            .info{
+                display: flex;
+                align-items: center;
+                justify-content: space-around;
+                
+
+                span{
+                    font-size: 12px;
+                }
+            }
+        }
+        .right{
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: flex-end;
+            height: 100%;
+
+
+            button{
+                border: none;
+                background-color: darkgreen;
+                color: white;
+                padding: 10px 20px;
+                border-radius: 15px;
+                cursor: pointer;
+                margin: 3px;
+            }
+
+            .top{
+              gap: 10px;
+              display: flex;
+              
+            }
+            .bottom{
+              display: flex;
+              gap: 10px;
+
+              .postsCount{
+                font-size: 13px;
+                font-weight: 60px;
+              }
+              .following{
+                font-size: 13px;
+                font-weight: 60px;
+              }
+              .followers{
+                font-size: 13px;
+                font-weight: 60px;
+              }
+            }
+
+        }
+      }
+    }
+  }
+}

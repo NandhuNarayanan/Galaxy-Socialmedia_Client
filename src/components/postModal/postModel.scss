@@ -1,0 +1,17 @@
+@import '../../style.scss';
+.box {
+  @include themify($themes) {
+    color: themed('bg');
+    .input {
+      height: 5rem;
+      width: 37rem;
+      border-radius: 2%;
+      border: none;
+    }
+
+    .icons {
+      height: 50px;
+      width: 50px;
+    }
+  }
+}
