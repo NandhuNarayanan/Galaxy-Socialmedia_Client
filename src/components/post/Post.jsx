@@ -1,24 +1,27 @@
 import { Link } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import './post.scss'
-import MoreHorizIcon from '@mui/icons-material/MoreHoriz'
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder'
 import FavoriteIcon from '@mui/icons-material/Favorite'
-import { MessageCircle2 } from 'tabler-icons-react';
+import { MessageCircle2 } from 'tabler-icons-react'
 import SendIcon from '@mui/icons-material/Send'
 import Comments from '../comments/Comments'
 import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder'
 import BookmarkIcon from '@mui/icons-material/Bookmark'
-import { image } from '@cloudinary/url-gen/qualifiers/source'
 import axios from 'axios'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
-import { profileVisit } from '../../features/pofileSlice'
+
+import IconButton from '@mui/material/IconButton'
+import Menu from '@mui/material/Menu'
+import MenuItem from '@mui/material/MenuItem'
+import MoreVertIcon from '@mui/icons-material/MoreVert'
 
 function Post({ post }) {
   const [commentOpen, setCommentOpen] = useState(false)
   const [liked, setLiked] = useState(false)
   const [likeCount, setLikeCount] = useState(post.likedUsers.length)
+  const [saved, setSaved] = useState(false)
 
   const navigate = useNavigate()
   const dispatch = useDispatch()
@@ -33,39 +36,66 @@ function Post({ post }) {
       .then((response) => {
         if (response.data.liked) {
           setLiked(true)
-          setLikeCount(likeCount+1)
+          setLikeCount(likeCount + 1)
         } else if (response.data.unLike) {
           setLiked(false)
-          setLikeCount(likeCount-1)
+          setLikeCount(likeCount - 1)
         }
       })
   }
+  const postSaved = (id) => {
+    axios
+      .patch('http://localhost:3001/post/savedPost', {
+        SavedUserId: user._id,
+        savePostId: id,
+      })
+      .then((response) => {
+        console.log(response,'huhuhoooooooooooooooooo')
+        if (response.data.savePost) {
+          setSaved(true)
+        } else if (response.data.unSave) {
+          setSaved(false)
+        }
+      })
+      post()
+  }
+
   useEffect(() => {
     {
       post.isLiked ? setLiked(true) : setLiked(false)
+      post.isSaved ? setSaved(true) : setSaved(false)
     }
   }, [])
 
   const profileId = () => {
-
-    localStorage.setItem('profileId',post.userId._id)
+    localStorage.setItem('profileId', post.userId._id)
     navigate(`/profile/${post.userId._id}`)
   }
 
+  const [anchorEl, setAnchorEl] = useState(null)
+  const open = Boolean(anchorEl)
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget)
+  }
+  const handleClose = () => {
+    setAnchorEl(null)
+  }
+
   //TEMPORARY
-  const saved = false
+  // const saved = false
   return (
     <div className="post">
       <div className="container">
         <div className="user">
           <div className="userInfo">
-          {post.userId.profilePicture?<img
-            src={post.userId.profilePicture}
-            alt=""
-          />:<img
-          src="https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png?20150327203541"
-          alt=""
-        />}
+            {post.userId.profilePicture ? (
+              <img src={post.userId.profilePicture} alt="" />
+            ) : (
+              <img
+                src="https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png?20150327203541"
+                alt=""
+              />
+            )}
             <div className="details">
               <Link
                 onClick={profileId}
@@ -76,7 +106,40 @@ function Post({ post }) {
               <span className="date">1 min ago</span>
             </div>
           </div>
-          <MoreHorizIcon />
+          <IconButton
+            aria-label="more"
+            id="long-button"
+            aria-controls={open ? 'long-menu' : undefined}
+            aria-expanded={open ? 'true' : undefined}
+            aria-haspopup="true"
+            onClick={handleClick}
+          >
+            <MoreVertIcon />
+          </IconButton>
+          <Menu
+            id="long-menu"
+            MenuListProps={{
+              'aria-labelledby': 'long-button',
+            }}
+            anchorEl={anchorEl}
+            open={open}
+            onClose={handleClose}
+            PaperProps={{
+              style: {
+                maxHeight: '20',
+                width: '12ch',
+              },
+            }}
+          >
+            {post.userId._id == user._id ? (
+              <>
+                <MenuItem onClick={handleClose}>Delete</MenuItem>
+                <MenuItem onClick={handleClose}>Edit</MenuItem>
+              </>
+            ) : (
+              <MenuItem onClick={handleClose}>Report</MenuItem>
+            )}
+          </Menu>
         </div>
         <div className="content">
           <p>{post.desc}</p>
@@ -112,9 +175,15 @@ function Post({ post }) {
           </div>
           <div className="item">
             {saved ? (
-              <BookmarkIcon />
+              <BookmarkIcon
+                onClick={() => postSaved(post._id)}
+                className="bookmark"
+              />
             ) : (
-              <BookmarkBorderIcon className="bookmark" />
+              <BookmarkBorderIcon
+                onClick={() => postSaved(post._id)}
+                className="bookmark"
+              />
             )}
           </div>
         </div>

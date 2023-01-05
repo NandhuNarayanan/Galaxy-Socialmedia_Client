@@ -9,13 +9,15 @@ import { BrandMessenger } from 'tabler-icons-react'
 import CircleNotificationsIcon from '@mui/icons-material/CircleNotifications'
 import AddCircleIcon from '@mui/icons-material/AddCircle'
 import MenuIcon from '@mui/icons-material/Menu'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { DarkModeContext } from '../../context/darkModeContext'
 import Model from '../postModal/PostModals'
 import { useSelector } from 'react-redux'
 import Logo from '../../assets/image/logo_for_galaxy1.png'
 
 function LeftBar() {
+
+  const location = useLocation()
   const user = useSelector((state) => state.auth.newUser)
   const local = localStorage.getItem('auth')
 
@@ -25,6 +27,20 @@ function LeftBar() {
 
   const { toggle, darkMode } = useContext(DarkModeContext)
 
+  // const menuItem = document.querySelectorAll('.item')
+
+  // const removeActiveClass = () => {
+  //   menuItem.forEach(item => {
+  //     item.classList.remove('active')
+  //   })
+  // }
+
+  // menuItem.forEach(item => {
+  //   item.addEventListener('click',() => {
+  //     removeActiveClass()
+  //     item.classList.add('active')
+  //   })
+  // })
  
 
   return (
@@ -41,7 +57,7 @@ function LeftBar() {
               </Link>
             </div>
             <Link to="/home" style={{ textDecoration: 'none' }}>
-              <div className="item">
+              <div className="item active">
                 <HomeIcon style={{ fontSize: '30px' }} />
                 <span>Home</span>
               </div>
@@ -101,6 +117,7 @@ function LeftBar() {
         </div>
       </div>
       {modalIsOpen && <Model open={modalIsOpen} close={setModalIsOpen} />}
+      
     </>
   )
 }

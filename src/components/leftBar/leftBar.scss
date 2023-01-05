@@ -44,6 +44,9 @@
                 
             
         }
+        .item.active{
+            background-color: themed("border");
+        }
         .user{
             display: flex;
             align-items:center ;

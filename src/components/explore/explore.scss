@@ -1,4 +1,15 @@
+@import "../../style.scss";
 
+
+    
     .explore{
-        background-color: rgb(255, 255, 255);
+        @include themify($themes){
+           
+        background-color: themed("bgSoft");
+        padding: 50px;
+        height: 100%;
+
+        
     }
+
+}

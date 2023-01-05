@@ -60,16 +60,17 @@ const ProtectedRoute = ({ children }) => {
           path: '/profile/:id',
           element: <Profile />
         },
+        {
+          path: '/explore',
+          element: <Explore />
+        },
       ]
     },
     {
       path: '/login',
       element: <FormComponent />
     },
-     {
-      path: '/explore',
-      element: <Explore />
-    },
+     
   ])
   return (
     <div className="App">
