@@ -11,6 +11,7 @@ import BookmarkIcon from '@mui/icons-material/Bookmark'
 import axios from 'axios'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
+import {format} from 'timeago.js'
 
 import IconButton from '@mui/material/IconButton'
 import Menu from '@mui/material/Menu'
@@ -103,7 +104,7 @@ function Post({ post }) {
               >
                 <span className="name">{post.userId.firstName}</span>
               </Link>
-              <span className="date">1 min ago</span>
+              <span className="date">{format(post.createdAt)}</span>
             </div>
           </div>
           <IconButton
@@ -142,7 +143,7 @@ function Post({ post }) {
           </Menu>
         </div>
         <div className="content">
-          <p>{post.desc}</p>
+          <p>{post.caption}</p>
 
           {post.image
             ? post.image.map((obj, index) => {

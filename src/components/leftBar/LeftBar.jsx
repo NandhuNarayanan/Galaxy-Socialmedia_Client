@@ -8,12 +8,25 @@ import SearchIcon from '@mui/icons-material/Search'
 import { BrandMessenger } from 'tabler-icons-react'
 import CircleNotificationsIcon from '@mui/icons-material/CircleNotifications'
 import AddCircleIcon from '@mui/icons-material/AddCircle'
-import MenuIcon from '@mui/icons-material/Menu'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { DarkModeContext } from '../../context/darkModeContext'
 import Model from '../postModal/PostModals'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import Logo from '../../assets/image/logo_for_galaxy1.png'
+
+import Box from '@mui/material/Box';
+import Avatar from '@mui/material/Avatar';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import IconButton from '@mui/material/IconButton';
+import Typography from '@mui/material/Typography';
+import Tooltip from '@mui/material/Tooltip';
+import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder'
+import PersonAdd from '@mui/icons-material/PersonAdd';
+import Settings from '@mui/icons-material/Settings';
+import Logout from '@mui/icons-material/Logout';
+import { logOut } from '../../features/auth/authSlice'
 
 function LeftBar() {
 
@@ -22,6 +35,8 @@ function LeftBar() {
   const local = localStorage.getItem('auth')
 
   const navigate = useNavigate()
+
+  const dispatch = useDispatch()
 
   const [modalIsOpen, setModalIsOpen] = useState(false)
 
@@ -41,6 +56,19 @@ function LeftBar() {
   //     item.classList.add('active')
   //   })
   // })
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const handleLogout = () => {
+    dispatch(logOut())
+    navigate('/login')
+  }
  
 
   return (
@@ -83,10 +111,12 @@ function LeftBar() {
                 <span>Explore</span>
             </div>
               </Link>
+              <Link to='/chat' >
             <div className="item">
               <BrandMessenger style={{ fontSize: '30px' }} />
               <span>Message</span>
             </div>
+            </Link>
             <div className="item">
               <CircleNotificationsIcon style={{ fontSize: '30px' }} />
               <span>Notification</span>
@@ -110,8 +140,83 @@ function LeftBar() {
               
             </div>
             <div className="menu-bar">
-              <MenuIcon style={{ fontSize: '30px' }} />
-              <span>More</span>
+      <Box sx={{ display: 'flex', alignItems: 'center', textAlign: 'center' }}>
+        
+        <Tooltip title="Account settings">
+          <IconButton
+            onClick={handleClick}
+            size="small"
+            sx={{ ml: 2 }}
+            aria-controls={open ? 'account-menu' : undefined}
+            aria-haspopup="true"
+            aria-expanded={open ? 'true' : undefined}
+          >
+            <Avatar sx={{ width: 32, height: 32 }}>M</Avatar>
+            <Typography sx={{ minWidth: 70 }}><span className='more'>More</span></Typography>
+          </IconButton>
+        </Tooltip>
+      </Box>
+      <Menu
+        anchorEl={anchorEl}
+        id="account-menu"
+        open={open}
+        onClose={handleClose}
+        onClick={handleClose}
+        PaperProps={{
+          elevation: 0,
+          sx: {
+            overflow: 'visible',
+            filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
+            mt: 1.5,
+            '& .MuiAvatar-root': {
+              width: 32,
+              height: 32,
+              ml: -0.5,
+              mr: 1,
+            },
+            '&:before': {
+              content: '""',
+              display: 'block',
+              position: 'absolute',
+              bottom: -10,
+              right: 14,
+              width: 10,
+              height: 10,
+              bgcolor: 'background.paper',
+              transform: 'translateY(-50%) rotate(45deg)',
+              zIndex: 0,
+            },
+          },
+        }}
+        transformOrigin={{ horizontal: 'right', vertical: 'bottom' }}
+        anchorOrigin={{ horizontal: 'right', vertical: 'top' }}
+      >
+        <MenuItem>
+          <ListItemIcon>
+            <BookmarkBorderIcon fontSize="small" />
+          </ListItemIcon>
+          Saved
+        </MenuItem>
+        <MenuItem>
+          <ListItemIcon>
+            <PersonAdd fontSize="small" />
+          </ListItemIcon>
+          Add another account
+        </MenuItem>
+        <MenuItem>
+          <ListItemIcon>
+            <Settings fontSize="small" />
+          </ListItemIcon>
+          Settings
+        </MenuItem>
+        <MenuItem onClick={handleLogout}>
+          <ListItemIcon>
+            <Logout fontSize="small" />
+          </ListItemIcon>
+          Logout
+        </MenuItem>
+      </Menu>
+              
             </div>
           </div>
         </div>

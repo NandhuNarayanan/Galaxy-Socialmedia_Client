@@ -4,6 +4,7 @@ import FavoriteBorderSharpIcon from '@mui/icons-material/FavoriteBorderSharp';
 import './comments.scss'
 import axios from 'axios';
 import { useSelector } from 'react-redux';
+import {format} from 'timeago.js'
 
 function CommentComponents({postId}) {
    console.log(postId,'prop')
@@ -67,7 +68,7 @@ function CommentComponents({postId}) {
                 <span>{comment.userId.firstName}</span>
                 <p>{comment.content}</p>
                 <span className='time'>
-                    1 m
+                   {format(comment.date)}
                 </span>
                 </div>
                 <div className="reply">

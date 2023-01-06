@@ -1,19 +1,19 @@
 import React, { useEffect, useRef, useState } from 'react'
 // import Modal from 'react-modal'
 import './postModel.scss'
-import CancelIcon from '@mui/icons-material/Cancel';
-import ImageSharpIcon from '@mui/icons-material/ImageSharp';
+import CancelIcon from '@mui/icons-material/Cancel'
+import ImageSharpIcon from '@mui/icons-material/ImageSharp'
 import axios from 'axios'
-import { useSelector } from 'react-redux';
+import { useSelector } from 'react-redux'
 
-
-import Backdrop from '@mui/material/Backdrop';
-import Box from '@mui/material/Box';
-import Modal from '@mui/material/Modal';
-import Fade from '@mui/material/Fade';
-import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
-import { auto } from '@cloudinary/url-gen/qualifiers/dpr';
+import Backdrop from '@mui/material/Backdrop'
+import Box from '@mui/material/Box'
+import Modal from '@mui/material/Modal'
+import Fade from '@mui/material/Fade'
+import Button from '@mui/material/Button'
+import Typography from '@mui/material/Typography'
+import { auto } from '@cloudinary/url-gen/qualifiers/dpr'
+import { borderRadius } from '@mui/system'
 
 const style = {
   position: 'absolute',
@@ -25,23 +25,41 @@ const style = {
   border: '2px solid #000',
   boxShadow: 24,
   p: 4,
-  display:'flex,'
-};
+  display: 'flex,',
+  border: 'none',
+  borderRadius: '4px',
+}
 
-
+const uploadButton = {
+  backgroundColor: 'green',
+  color: 'white',
+  width: '80px',
+  cursor: 'pointer',
+  fontSize: '15px',
+  border: 'none',
+  borderRadius: '20px',
+}
+const input = {
+  borderRadius: '5px',
+  width: '40vh',
+  height: '8vh',
+}
+const icons = {
+  boxSizing: 'content-box'
+}
 
 function Modals({ open, close }) {
   const [imageSelected, setImageSelected] = useState()
+  const [caption, setCaption] = useState()
 
-  const userId = useSelector(state => state.auth.newUser)
-  
-  const CloudinaryRef = useRef();
-  const widgetRef = useRef();
+  const userId = useSelector((state) => state.auth.newUser)
 
+  const CloudinaryRef = useRef()
+  const widgetRef = useRef()
 
   const openWidget = () => {
-    widgetRef.current.open();
-  };
+    widgetRef.current.open()
+  }
   const uploadImage = () => {
     const formData = new FormData()
     console.log(imageSelected)
@@ -53,43 +71,43 @@ function Modals({ open, close }) {
       .then((response) => {
         console.log(response)
         const url = response.data.secure_url
-        return axios.post('http://localhost:3001/post/uploadpost', {
-          url,userId
-        }).then((response)=>{
-          console.log(response);
-        })
+        return axios
+          .post('http://localhost:3001/post/uploadpost', {
+            url,
+            userId,
+            caption,
+          })
+          .then((response) => {
+            console.log(response)
+          })
       })
-      close(false)
-
+    close(false)
   }
 
   useEffect(() => {
-    CloudinaryRef.current = window.cloudinary;
+    CloudinaryRef.current = window.cloudinary
     widgetRef.current = CloudinaryRef.current.createUploadWidget(
       {
-        cloudName: "dnz0safyt",
-        uploadPreset: "zwmavdgu",
+        cloudName: 'dnz0safyt',
+        uploadPreset: 'zwmavdgu',
         multiple: false, // restrict upload to a single file
-        clientAllowedFormats: ["images", "png", "webp", "jpeg"], // restrict uploading to image files only
-
+        clientAllowedFormats: ['images', 'png', 'webp', 'jpeg'], // restrict uploading to image files only
       },
       function (err, result) {
-        if (!err && result && result.event === "success") {
-        setImageSelected(result.info.secure_url)
+        if (!err && result && result.event === 'success') {
+          setImageSelected(result.info.secure_url)
         }
-      }
-    );
- 
-
-  }, []);
+      },
+    )
+  }, [])
 
   return (
     <>
-    <Modal
+      <Modal
         aria-labelledby="transition-modal-title"
         aria-describedby="transition-modal-description"
         open={open}
-        onClose={()=>close(false)}
+        onClose={() => close(false)}
         closeAfterTransition
         BackdropComponent={Backdrop}
         BackdropProps={{
@@ -97,19 +115,29 @@ function Modals({ open, close }) {
         }}
       >
         <Fade in={open}>
-          <Box className='box' sx={style}>
+          <Box className="box" sx={style}>
             <Typography id="transition-modal-title" variant="h6" component="h2">
-            <h3>  
-              Create new post
-              </h3> 
+              <h3>Create new post</h3>
             </Typography>
-            <input className='input' type='text' placeholder='Write a caption...' />
-            <div onClick={openWidget} className='icons'>
-                <ImageSharpIcon/>
+            <input
+              className="input"
+              style={input}
+              type="text"
+              placeholder="Write a caption..."
+              onChange={(event)=> setCaption(event.target.value)}
+            />
+            <div style={icons} onClick={openWidget} className="icons">
+              <ImageSharpIcon />
             </div>
-            <img style={{height:"300px", objectFit: "cover"}} src={imageSelected} alt=''/>
+            <img
+              style={{ height: '300px', objectFit: 'cover' }}
+              src={imageSelected}
+              alt=""
+            />
             <div>
-              <button onClick={uploadImage}>Upload</button>
+              <button style={uploadButton} onClick={uploadImage}>
+                Upload
+              </button>
             </div>
           </Box>
         </Fade>

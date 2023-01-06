@@ -12,6 +12,7 @@ import RequireAuth from './features/auth/RequireAuth'
 import Landing from './components/Landing'
 import { useSelector } from 'react-redux'
 import Explore from './components/explore/Explore'
+import Chat from './pages/chat/Chat'
 
 function App() {
 const auth = useSelector(state =>state.auth)
@@ -63,6 +64,10 @@ const ProtectedRoute = ({ children }) => {
         {
           path: '/explore',
           element: <Explore />
+        },
+        {
+          path: '/chat',
+          element: <Chat />
         },
       ]
     },

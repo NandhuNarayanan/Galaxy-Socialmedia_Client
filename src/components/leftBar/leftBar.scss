@@ -46,6 +46,7 @@
         }
         .item.active{
             background-color: themed("border");
+            border-radius: 5px;
         }
         .user{
             display: flex;
@@ -75,6 +76,9 @@
                 font-size: 20px;
 
             }
+        }
+        .more{
+            color: themed("textColor");
         }
        } 
     }
