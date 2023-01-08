@@ -9,7 +9,6 @@ function FollowButton({followUserId,isFollowed}) {
 
   const [following, setFollowing] = useState(isFollowed)
   const [followCheck, setFollowCheck ] = useState({})
-  const [userPost, setUserPost] = useState()
   const [followCount, setfollowCount] = useState()
 
   const profile =  localStorage.getItem('profileId')

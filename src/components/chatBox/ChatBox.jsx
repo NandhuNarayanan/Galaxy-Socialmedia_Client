@@ -1,14 +1,25 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { getUser } from '../../app/api/chatRequests'
 import { addMessage, getMessages } from '../../app/api/messageRequests'
 import { format } from 'timeago.js'
 import InputEmoji from 'react-input-emoji'
+import { MessageChatbot } from 'tabler-icons-react';
+import './chatBox.scss'
 
-function ChatBox({ chat, currentUser }) {
+function ChatBox({ chat, currentUser, setSendMessage, recieveMessage }) {
   const [userData, setUserData] = useState(null)
   const [messages, setMessages] = useState([])
   const [newMessage, setNewMessage] = useState('')
+  const scroll = useRef()
 
+
+  useEffect(()=>{
+    if (recieveMessage !== null && recieveMessage?.chatId === chat?._id) {
+      setMessages([...messages,recieveMessage]);
+    }
+  },[recieveMessage])
+
+  // fetching data for header
   useEffect(() => {
     const userId = chat?.members?.find((id) => id !== currentUser)
     const getUserData = async () => {
@@ -47,16 +58,29 @@ function ChatBox({ chat, currentUser }) {
         chatId: chat._id,
     
     }
+    if (message.text==="") {
+     const {data} = newMessage()
+    }else{
+      
+      //send message to database
+      try {
+          const {data} = await addMessage(message);
+          setMessages([...messages,data])
+          setNewMessage("")
+      } catch (error) {
+          console.log(error);
+      } 
+      //send message to socket server
+      const receiverId = chat.members.find((id)=>id !== currentUser);
+      setSendMessage({...message,receiverId})
+    }
    
-    //send message to database
-    try {
-        const {data} = await addMessage(message);
-        setMessages([...messages,data])
-        setNewMessage("")
-    } catch (error) {
-        console.log(error);
-    } 
   }
+
+  //Always scroll to last message
+  useEffect(()=>{
+    scroll.current?.scrollIntoView({behavior: "smooth"})
+  },[messages])
 
   return (
     <>
@@ -71,34 +95,26 @@ function ChatBox({ chat, currentUser }) {
                     src={userData.newUser.profilePicture}
                     alt=""
                     className="followersImage"
-                    style={{
-                      width: '50px',
-                      height: '50px',
-                      borderRadius: '50%',
-                    }}
+                    
                   />
                 ) : (
                   <img
                     src="https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png?20150327203541"
                     alt=""
                     className="followersImage"
-                    style={{
-                      width: '50px',
-                      height: '50px',
-                      borderRadius: '50%',
-                    }}
+                    
                   />
                 )}
-                <div className="name" style={{ fontSize: '0.8rem' }}>
+                <div className="chatName">
                   <span>{userData?.newUser.firstName}</span>
                 </div>
               </div>
-              <hr style={{ width: '85%', border: '0.1px solid #ececec' }} />
             </div>
             <div className="chat-body">
               {messages.map((message) => (
                 <>
                   <div
+                  ref={scroll}
                     className={
                       message.senderId === currentUser
                         ? 'message own'
@@ -118,7 +134,10 @@ function ChatBox({ chat, currentUser }) {
             </div>
           </>
         ) : (
-          <span className='chatbox-empty-message'>Tap on a Chat to start Conversation...</span>
+          <>
+          <MessageChatbot style={{margin:'27rem',width:'36rem',height:'6rem'}}/>
+          <span className='chatbox-empty-message'>Send messages to a friend...</span>
+          </>
         )}
       </div>
     </>

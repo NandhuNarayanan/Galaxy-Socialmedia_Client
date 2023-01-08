@@ -8,20 +8,21 @@ function PostComponents() {
 
     const [posts, setPosts] = useState([])
 
-    
-// const userToken = localStorage.getItem('Auth')
+
 
 
     useEffect(()=>{
         axios.get('http://localhost:3001/post/getpost').then((response)=>{
             setPosts(response.data)
         })
+        
     },[])
+
 
   return (
     <>
      <div className='posts'>
-        {posts.map(post=>(
+           {posts.map(post=>(
             <Post post={post} key={post.id}/>
         ))}
     </div>

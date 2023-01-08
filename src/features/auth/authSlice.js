@@ -13,6 +13,7 @@ const authSlice = createSlice({
         },
         logOut: (state , action) => {
             localStorage.removeItem('auth')
+            localStorage.removeItem('profileId')
             state.newUser = null
             state.token = null
         },

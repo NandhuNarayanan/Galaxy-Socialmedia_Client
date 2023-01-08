@@ -7,7 +7,7 @@ function Posts() {
 
   return (
    <>
-   <PostComponents/>
+   <PostComponents />
    </>
   )
 }

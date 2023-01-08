@@ -10,8 +10,10 @@ import { useParams } from 'react-router-dom'
 import FollowButton from '../../components/followComponents/FollowButton'
 import {  setUser } from '../../features/auth/authSlice'
 import Viewfollowers from '../../components/friendsList/viewFollowList/Viewfollowers'
-import Viewfollowing from '../../components/friendsList/viewFollowList/Viewfollowing'
-import FollowList from '../../components/friendsList/viewFollowList/FollowList'
+import Tabs from '@mui/material/Tabs';
+import Tab from '@mui/material/Tab';
+import Userpost from '../../components/userPost/Userpost'
+import Savedpost from '../../components/userPost/Savedpost'
 
 function Profile() {
   const [getProfile, setGetProfile] = useState({})
@@ -21,6 +23,14 @@ function Profile() {
 
   const [profileEdit, setProfileEdit] = useState(false)
 
+  const [value, setValue] = useState(0);
+  const [userPosts, setUserPosts] = useState([])
+
+  const [tabChange, setTabChange] = useState(1)
+
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
  
   
  const profile =  localStorage.getItem('profileId')
@@ -39,6 +49,13 @@ function Profile() {
       setGetProfile(response.data)
     })
   }
+
+  useEffect(()=>{
+    axios.get(`http://localhost:3001/post/getUserPost/${id}`).then((response)=>{
+            console.log(response,'userPost is Here');
+            setUserPosts(response.data)
+        })
+  },[id])
  
   
   useEffect(()=>{
@@ -102,7 +119,7 @@ profileGet()
             <div className="bottom">
               <div className="postsCount">
                 <span >
-                  7 posts
+                 {userPosts?.length} posts
                 </span>
               </div>
               <div className="following">
@@ -118,7 +135,14 @@ profileGet()
             </div>
           </div>
         </div>
-        <Posts />
+        <div>
+        <Tabs value={value} onChange={handleChange} centered>
+        <Tab onClick={()=> setTabChange(1)} label="POSTS" />
+        {userId._id===profile?<Tab onClick={()=> setTabChange(2)} label="SAVED" />:null}
+      </Tabs>
+        </div>
+        {tabChange===1?<Userpost userProfile={true} userPosts={userPosts}/>:null}
+        {tabChange===2?<Savedpost userId={id}/>:null}
       {profileEdit && <ProfileEditModal  open={profileEdit} close={setProfileEdit}/>}
       {followersList && <Viewfollowers  open={followersList} close={setFollowersList} Viewfollowers={true} />}
       {followingList && <Viewfollowers  open={followingList} close={setFollowingList} Viewfollowing={true}/>}

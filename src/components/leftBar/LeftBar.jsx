@@ -27,6 +27,7 @@ import PersonAdd from '@mui/icons-material/PersonAdd';
 import Settings from '@mui/icons-material/Settings';
 import Logout from '@mui/icons-material/Logout';
 import { logOut } from '../../features/auth/authSlice'
+import Search from '../search/Search'
 
 function LeftBar() {
 
@@ -39,6 +40,7 @@ function LeftBar() {
   const dispatch = useDispatch()
 
   const [modalIsOpen, setModalIsOpen] = useState(false)
+  const [searchModal, setSearchModal] = useState(false)
 
   const { toggle, darkMode } = useContext(DarkModeContext)
 
@@ -90,7 +92,7 @@ function LeftBar() {
                 <span>Home</span>
               </div>
             </Link>
-            <div className="item">
+            <div onClick={() => setSearchModal(true) } className="item">
               <SearchIcon style={{ fontSize: '30px' }} />
               <span>Search</span>
             </div>
@@ -222,6 +224,7 @@ function LeftBar() {
         </div>
       </div>
       {modalIsOpen && <Model open={modalIsOpen} close={setModalIsOpen} />}
+      {searchModal && <Search open={searchModal} close={setSearchModal} />}
       
     </>
   )

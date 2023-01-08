@@ -6,7 +6,6 @@ import './viewFollowers.scss'
 import { useSelector } from 'react-redux';
 import { XboxX } from 'tabler-icons-react';
 import FollowButton from '../../followComponents/FollowButton';
-import FollowList from './FollowList';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 

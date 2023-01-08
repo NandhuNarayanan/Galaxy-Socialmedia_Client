@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 // import Modal from 'react-modal'
 import './postModel.scss'
-import CancelIcon from '@mui/icons-material/Cancel'
 import ImageSharpIcon from '@mui/icons-material/ImageSharp'
 import axios from 'axios'
 import { useSelector } from 'react-redux'
@@ -12,8 +11,7 @@ import Modal from '@mui/material/Modal'
 import Fade from '@mui/material/Fade'
 import Button from '@mui/material/Button'
 import Typography from '@mui/material/Typography'
-import { auto } from '@cloudinary/url-gen/qualifiers/dpr'
-import { borderRadius } from '@mui/system'
+import Fab from '@mui/material/Fab'
 
 const style = {
   position: 'absolute',
@@ -45,7 +43,7 @@ const input = {
   height: '8vh',
 }
 const icons = {
-  boxSizing: 'content-box'
+  fontSize:'14px',
 }
 
 function Modals({ open, close }) {
@@ -124,10 +122,13 @@ function Modals({ open, close }) {
               style={input}
               type="text"
               placeholder="Write a caption..."
-              onChange={(event)=> setCaption(event.target.value)}
+              onChange={(event) => setCaption(event.target.value)}
             />
             <div style={icons} onClick={openWidget} className="icons">
-              <ImageSharpIcon />
+              <Fab color="primary" aria-label="add">
+                <ImageSharpIcon  />
+              </Fab>
+                <span>Select Image</span>
             </div>
             <img
               style={{ height: '300px', objectFit: 'cover' }}

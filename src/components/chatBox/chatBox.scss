@@ -1,0 +1,127 @@
+@import '../../style.scss';
+
+.ChatBox-container {
+	background: rgba(255, 255, 255, 0.64);
+	border-radius: 1rem;
+	display: grid;
+	grid-template-rows: 14vh 60vh 13vh;
+	
+
+}
+.chat-header {
+	padding: 1rem ;
+	display: flex;
+	flex-direction: row;
+	margin-bottom: 10px;
+	border: 1px solid rgb(240, 241, 240);
+	border-radius: 5px;
+	border-top: none;
+    -webkit-box-shadow: 0px 0px 10px 1px rgba(0, 0, 0, 0.105);
+	-moz-box-shadow: 0px 0px 10px 1px rgba(0, 0, 0, 0.09);
+	box-shadow: 0px 0px 10px 1px rgba(0, 0, 0, 0.09);
+
+    .chatName{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: row;
+    font-size: large;
+    font-weight: 500;
+    }
+}
+
+.chat-body {
+	display: flex;
+	flex-direction: column;
+	gap: 0.5rem;
+	padding: 1.5rem;
+	overflow: scroll;
+	height:69vh;
+	border: 1px solid rgb(241, 242, 241);
+    border-radius: 5px;
+
+	&::-webkit-scrollbar{
+        display: none;
+    }
+}
+.message {
+	background:  linear-gradient(to bottom, #00aae8 0%, #0279d4 100%);
+	// linear-gradient(98.63deg, #2e7715 0%, #44ab10 100%);
+	color: rgb(255, 255, 255);
+	padding: 0.5rem;
+	border-radius: 1rem  1rem 1rem 0rem;
+	max-width: 20rem;
+	min-width: 5rem;
+	width: fit-content;
+	display: flex;
+	flex-direction: column;
+    gap: 0.4rem;
+	& > span {
+		&:nth-child(2) {
+			font-size: 0.6rem;
+			color: #fff;
+			align-self: end;
+			font-weight: 200;
+		}
+	}
+}
+.own {
+	align-self: flex-end;
+	border-radius: 1rem 1rem 0 1rem;
+	background:  linear-gradient(to bottom, #3eca7d 0%, #00853c 100%);
+
+	 
+}
+.chat-sender {
+    @include themify($themes) {
+	background: themed('bgSoft');
+	display: flex;
+	justify-content: space-between;
+	height: 4.5rem;
+	align-items: center;
+	gap: 1rem;
+	padding: 0.8rem;
+	border-radius: 1rem;
+	align-self: end;
+	border: 1px solid rgb(218, 221, 217);
+    border-radius: 5px;
+
+	& > input {
+		height: 80%;
+		background-color: themed('bgSoft');
+		border-radius: 0.5rem;
+		border: none;
+		outline: none;
+		flex: 1;
+		font-size: 14px;
+		padding: 0px 15px 0px 15px;
+	}
+	.plus{
+		height: 90%;
+		padding: 0px 15px 0px 15px;
+		
+			background: themed('bgSoft');
+			border-radius: 0.6rem;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			font-weight: bold;
+			cursor: pointer;
+		}
+	}
+}
+
+.send-button{
+    padding: 5px;
+    font-size: 12px;
+	width: 6rem;
+	height: 2.5rem;
+	flex: 1;
+    background: linear-gradient(to bottom, #00cc66 0%, #00cc99 100%);
+    border: none;
+    border-radius: 10px;
+    color: white;
+	text-align: center;
+    font-weight: 500;
+	cursor: pointer;
+}

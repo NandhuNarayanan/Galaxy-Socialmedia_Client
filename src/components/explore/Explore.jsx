@@ -1,6 +1,5 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
-import ExploreGallery from './ExploreGallery'
 import './explore.scss'
 import { Masonry } from '@mui/lab'
 

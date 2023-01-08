@@ -21,8 +21,9 @@ import MoreVertIcon from '@mui/icons-material/MoreVert'
 function Post({ post }) {
   const [commentOpen, setCommentOpen] = useState(false)
   const [liked, setLiked] = useState(false)
-  const [likeCount, setLikeCount] = useState(post.likedUsers.length)
+  const [likeCount, setLikeCount] = useState(post.likedUsers?.length)
   const [saved, setSaved] = useState(false)
+  const [anchorEl, setAnchorEl] = useState(null)
 
   const navigate = useNavigate()
   const dispatch = useDispatch()
@@ -61,10 +62,19 @@ function Post({ post }) {
       post()
   }
 
+  const postDelete = (id) => {
+    axios.patch('http://localhost:3001/post/deletePost',{
+          postId:id
+    }).then((response)=>{
+      console.log(response);
+    })
+  }
+
   useEffect(() => {
     {
       post.isLiked ? setLiked(true) : setLiked(false)
-      post.isSaved ? setSaved(true) : setSaved(false)
+      {user.savedPost?.includes(post._id)?setSaved(true):setSaved(false)}
+
     }
   }, [])
 
@@ -73,7 +83,9 @@ function Post({ post }) {
     navigate(`/profile/${post.userId._id}`)
   }
 
-  const [anchorEl, setAnchorEl] = useState(null)
+
+
+  
   const open = Boolean(anchorEl)
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget)
@@ -82,15 +94,14 @@ function Post({ post }) {
     setAnchorEl(null)
   }
 
-  //TEMPORARY
-  // const saved = false
+
   return (
     <div className="post">
       <div className="container">
         <div className="user">
           <div className="userInfo">
-            {post.userId.profilePicture ? (
-              <img src={post.userId.profilePicture} alt="" />
+            {post.userId?.profilePicture ? (
+              <img src={post.userId?.profilePicture} alt="" />
             ) : (
               <img
                 src="https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png?20150327203541"
@@ -102,7 +113,7 @@ function Post({ post }) {
                 onClick={profileId}
                 style={{ textDecoration: 'none', color: 'inherit' }}
               >
-                <span className="name">{post.userId.firstName}</span>
+                <span className="name">{post.userId?.firstName}</span>
               </Link>
               <span className="date">{format(post.createdAt)}</span>
             </div>
@@ -132,9 +143,9 @@ function Post({ post }) {
               },
             }}
           >
-            {post.userId._id == user._id ? (
+            {post.userId?._id == user?._id ? (
               <>
-                <MenuItem onClick={handleClose}>Delete</MenuItem>
+                <MenuItem onClick={()=>postDelete(post._id)}>Delete</MenuItem>
                 <MenuItem onClick={handleClose}>Edit</MenuItem>
               </>
             ) : (

@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import { getUser } from '../../app/api/chatRequests'
+import './conversation.scss'
 
-function Conversation({ data, currentUser }) {
+function Conversation({ data, currentUser, online }) {
+  console.log(currentUser,'currentUser');
   const [userData, setUserData] = useState(null)
 
   useEffect(() => {
-    const userId = data.members.find((id) => id !== currentUser)
+    const userId = data?.members.find((id) => id !== currentUser)
     const getUserData = async () => {
       try {
         const { data } = await getUser(userId)
@@ -20,25 +22,25 @@ function Conversation({ data, currentUser }) {
     <>
       <div className="follower conversation">
         <div>
-          <div className="online-dot"></div>
+          {online && <div className="online-dot"></div>}
           {userData?.newUser.profilePicture ? (
             <img
               src={userData.newUser.profilePicture}
               alt=""
               className="followersImage"
-              style={{ width: '50px', height: '50px', borderRadius: '50%' }}
+              
             />
           ) : (
             <img
               src="https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png?20150327203541"
               alt=""
               className="followersImage"
-              style={{ width: '50px', height: '50px', borderRadius: '50%' }}
+              
             />
           )}
           <div className="name" style={{ fontSize: '0.8rem' }}>
             <span>{userData?.newUser.firstName}</span>
-            <span>Online</span>
+            <span>{online ?'Online':'Offline'}</span>
           </div>
         </div>
       </div>

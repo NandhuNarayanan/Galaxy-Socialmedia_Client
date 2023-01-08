@@ -38,7 +38,26 @@ const auth = useSelector(state =>state.auth)
     )
   }
 
+  const Layout1 = () => {
+    return (
+      <div className={`theme-${darkMode ? 'dark' : 'light'}`}>
+        <div style={{ display: 'flex' }}>
+          <Leftbar />
+          <div style={{ flex: 6 }}>
+          <Outlet/>
+          </div>
+        </div>
+      </div>
+    )
+  }
+
 const ProtectedRoute = ({ children }) => {
+    if (!currentUser) {
+      return <Navigate to='/login' />
+    }
+    return children
+  };
+  const ProtectedRoute1 = ({ children }) => {
     if (!currentUser) {
       return <Navigate to='/login' />
     }
@@ -65,6 +84,12 @@ const ProtectedRoute = ({ children }) => {
           path: '/explore',
           element: <Explore />
         },
+      ]
+    },
+    {
+      path:'/',
+      element:<ProtectedRoute1><Layout1/></ProtectedRoute1>,
+      children:[
         {
           path: '/chat',
           element: <Chat />
