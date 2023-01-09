@@ -8,7 +8,6 @@ import { io } from 'socket.io-client'
 
 function Chat() {
   const user = useSelector((state) => state.auth.newUser)
-  console.log(user, 'user😎')
 
   const [chats, setChats] = useState([])
   const [currentChat, setCurrentChat] = useState(null)

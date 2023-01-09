@@ -8,7 +8,7 @@ function PostComponents() {
 
     const [posts, setPosts] = useState([])
 
-
+  const postId = posts._id
 
 
     useEffect(()=>{
@@ -16,7 +16,7 @@ function PostComponents() {
             setPosts(response.data)
         })
         
-    },[])
+    },[postId])
 
 
   return (

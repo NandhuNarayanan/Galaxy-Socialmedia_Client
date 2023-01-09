@@ -6,7 +6,7 @@ import Posts from '../../components/posts/Posts'
 import { useSelector } from 'react-redux';
 import axios from 'axios'
 import ProfileEditModal from '../../components/profileEditModal/ProfileEditModal'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import FollowButton from '../../components/followComponents/FollowButton'
 import {  setUser } from '../../features/auth/authSlice'
 import Viewfollowers from '../../components/friendsList/viewFollowList/Viewfollowers'
@@ -32,7 +32,8 @@ function Profile() {
     setValue(newValue);
   };
  
-  
+  const navigate = useNavigate()
+
  const profile =  localStorage.getItem('profileId')
  const {id} = useParams()
 
@@ -48,6 +49,19 @@ function Profile() {
     await axios.get(`http://localhost:3001/profile/${profile}`).then((response)=>{
       setGetProfile(response.data)
     })
+  }
+
+  const createChatRoom = async () => {
+    try {
+   const {data}  = await axios.post('http://localhost:3001/chat',{
+      senderId:user,
+      receiverId:id
+    })
+    console.log(data);
+    navigate('/chat')
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   useEffect(()=>{
@@ -111,7 +125,7 @@ profileGet()
               <MoreVertIcon style={{fontSize:'25px'}} />
             </div>) :(<div className="top">
               <FollowButton followUserId={getProfile._id} />
-              <button style={{backgroundColor:'lightgray',color:'black'}}>
+              <button onClick={createChatRoom} style={{backgroundColor:'lightgray',color:'black'}}>
                 Message
               </button>
               <MoreVertIcon style={{fontSize:'25px'}} />

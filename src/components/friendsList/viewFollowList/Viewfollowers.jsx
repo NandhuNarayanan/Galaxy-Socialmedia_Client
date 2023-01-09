@@ -7,7 +7,7 @@ import { useSelector } from 'react-redux';
 import { XboxX } from 'tabler-icons-react';
 import FollowButton from '../../followComponents/FollowButton';
 import axios from 'axios';
-import { useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 
 
 const style = {
@@ -32,6 +32,13 @@ const [userList , setUserList] = useState([])
 const [userFollowingList , setUserFollowingList] = useState([])
 const id = useSelector(state => state.auth.newUser._id)
 const profileId =  localStorage.getItem('profileId')
+
+const navigate = useNavigate()
+
+  const userProfileId = () => {
+    localStorage.setItem('profileId', post.userId._id)
+    navigate(`/profile/${post.userId._id}`)
+  }
 
 useEffect(()=>{
     axios.get(`http://localhost:3001/profile/userList/${profileId}`).then((response)=>{
@@ -62,16 +69,18 @@ console.log(userList,"userList");
         { Viewfollowers ? userList?.map((userFollowing)=>(
           <>
         <div className="followUser">
+        <Link onClick={userProfileId}>
       <div className="followUserInfo">
       <img
           src={userFollowing?.profilePicture?userFollowing.profilePicture:"https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png?20150327203541"}
           alt=""
-        />
+          />
         <span>{userFollowing.firstName}</span>
       </div>
       <div className="followButtons">
        <FollowButton/>
       </div>
+          </Link>
     </div> 
     </>
     )) :

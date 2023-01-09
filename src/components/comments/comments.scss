@@ -11,6 +11,13 @@
 
       
 @include themify($themes){
+    .noComments{
+        font-size: medium;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        
+    }
     img{
         width: 40px;
         height: 40px;

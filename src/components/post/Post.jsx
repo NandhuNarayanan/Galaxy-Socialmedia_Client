@@ -92,6 +92,7 @@ function Post({ post }) {
   }
   const handleClose = () => {
     setAnchorEl(null)
+    postDelete(null)
   }
 
 

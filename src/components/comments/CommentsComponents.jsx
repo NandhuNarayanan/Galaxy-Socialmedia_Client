@@ -5,6 +5,7 @@ import './comments.scss'
 import axios from 'axios';
 import { useSelector } from 'react-redux';
 import {format} from 'timeago.js'
+import { MessageCircle2 } from 'tabler-icons-react';
 
 function CommentComponents({postId}) {
    console.log(postId,'prop')
@@ -51,16 +52,20 @@ function CommentComponents({postId}) {
         axios.get(`http://localhost:3001/post/getComments/${postId}`).then((response)=>{
             setAllcomments(response.data.comments)
         })
-    },[])
+    },[allComments])
 
   return (
     <>
      <div className='comments'>
+        
         <div className='write'>
         {comment.userId ?<img src={comment.userId.profilePicture} alt=''/>:<img src='https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png?20150327203541' alt=''/>}
         <input type='text' value={comment} onChange={(event) => setComment(event.target.value)} placeholder='write a comment' />
         <button onClick={postComment} >Send</button>
         </div>
+    <div className='noComments'>
+    {allComments?.length===0?'No Comments yet':null}
+    </div>
         {allComments?.map((comment)=>(
             <div className='comment'>
                 {comment.userId ?<img src={comment.userId.profilePicture} alt=''/>:<img src='https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png?20150327203541' alt=''/>}
