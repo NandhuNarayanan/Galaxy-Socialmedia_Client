@@ -3,7 +3,7 @@ import FollowButton from '../followComponents/FollowButton'
 import { useSelector } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
 
-function Suggestion({ user }) {
+function Suggestion({ user}) {
   const loginUser = useSelector((state) => state.auth.newUser)
 
   const isFollowed = loginUser.following.includes(user._id)

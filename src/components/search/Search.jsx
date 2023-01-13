@@ -13,7 +13,7 @@ const style = {
   transform: 'translate(-50%, -50%)',
   width: 400,
   bgcolor: 'background.paper',
-  border: '2px solid #000',
+  borderRadius: '3%',
   boxShadow: 24,
   p: 4,
 };
@@ -23,7 +23,6 @@ const inputStyle = {
   width: 300,
   height: 40
 }
-
 
 export default function BasicModal({open,close}) {
 
@@ -61,10 +60,11 @@ export default function BasicModal({open,close}) {
           <Typography id="modal-modal-title" variant="h4" component="h2">
             Search
           </Typography>
+          <hr style={{ width: '85%', border: '0.1px solid #ececec' }} />
           <input onChange={(event)=> setSearch(event.target.value)} style={inputStyle} placeholder='Search'/>
           {searchValues?searchValues.map((obj, index) => {
                 return   (<>
-                  <div className="followUser">
+                  <div className="followUser">    
                     <Link onClick={profileId}>
                 <div className="followUserInfo">
                 <img

@@ -5,54 +5,48 @@ import './comments.scss'
 import axios from 'axios';
 import { useSelector } from 'react-redux';
 import {format} from 'timeago.js'
-import { MessageCircle2 } from 'tabler-icons-react';
+
 
 function CommentComponents({postId}) {
    console.log(postId,'prop')
-    // const comments = [
-    //     {
-    //         id:1,
-    //         desc:"With decades of maintenance of way expertise and experience, no one knows the rail like Loram. Today, with our Loram Technologies business group, we’re leveraging our accumulated data",
-    //         name:"Aswandh",
-    //         userId:1,
-    //         profilePic:"https://images.pexels.com/photos/13622696/pexels-photo-13622696.jpeg?auto=compress&cs=tinysrgb&w=400&lazy=load",
-    //     },
-    //     {
-    //         id:2,
-    //         desc:"With decades of maintenance of way expertise and experience, no one knows the rail like Loram. Today, with our Loram Technologies business group, we’re leveraging our accumulated data",
-    //         name:"Aswandh",
-    //         userId:2,
-    //         profilePic:"https://images.pexels.com/photos/13622696/pexels-photo-13622696.jpeg?auto=compress&cs=tinysrgb&w=400&lazy=load",
-    //     },
-    //     {
-    //         id:1,
-    //         desc:"With decades of maintenance of way expertise and experience, no one knows the rail like Loram. Today, with our Loram Technologies business group, we’re leveraging our accumulated data",
-    //         name:"Aswandh",
-    //         userId:3,
-    //         profilePic:"https://images.pexels.com/photos/13622696/pexels-photo-13622696.jpeg?auto=compress&cs=tinysrgb&w=400&lazy=load",
-    //     },
-    // ]
+
  const userId = useSelector(state => state.auth.newUser._id)
  console.log(userId);
     const [comment, setComment] = useState('')
-    const [allComments,setAllcomments] = useState([])
+    const [allComments,setAllcomments] = useState({})
+
 
     const postComment = () => {
-        console.log(comment,'comments');
-        axios.post('http://localhost:3001/post/comment',{
-            postId,userId,content:comment
+        if(comment.trim() === ""){
+            console.log('huhaaahbbaaaabiii');
+        }else{
+
+            axios.post('http://localhost:3001/post/comment',{
+                postId,userId,content:comment
+            }).then((response)=>{
+                setAllcomments(response.data.comments)
+                setComment('')
+            })
+        }
+    }
+
+    const deleteComment = (postCommentId, commentId) => {
+        console.log(postCommentId, "ssss", commentId);
+        axios.patch('http://localhost:3001/post/deleteComment',{
+            postCommentId,
+            commentId
         }).then((response)=>{
-            console.log(response)
-            setAllcomments(response.data.comments)
-            setComment('')
+            console.log(response);
         })
     }
 
     useEffect(()=>{
         axios.get(`http://localhost:3001/post/getComments/${postId}`).then((response)=>{
-            setAllcomments(response.data.comments)
+            console.log('response of comment', response)
+            setAllcomments(response.data)
         })
-    },[allComments])
+        deleteComment()
+    },[comment])
 
   return (
     <>
@@ -64,17 +58,20 @@ function CommentComponents({postId}) {
         <button onClick={postComment} >Send</button>
         </div>
     <div className='noComments'>
-    {allComments?.length===0?'No Comments yet':null}
+    {allComments?.comments?.length===0?'No Comments yet':null}
     </div>
-        {allComments?.map((comment)=>(
+        {allComments?.comments?.map((comment)=>(
             <div className='comment'>
-                {comment.userId ?<img src={comment.userId.profilePicture} alt=''/>:<img src='https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png?20150327203541' alt=''/>}
+                {comment?.userId ?<img src={comment?.userId?.profilePicture} alt=''/>:<img src='https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png?20150327203541' alt=''/>}
                 <div className='info'>
-                <span>{comment.userId.firstName}</span>
-                <p>{comment.content}</p>
+                <span>{comment?.userId?.firstName}</span>
+                <p>{comment?.content}</p>
                 <span className='time'>
-                   {format(comment.date)}
+                   {format(comment?.date)}
                 </span>
+                {comment?.userId?._id=== userId ?(<div>
+                    <span style={{cursor:'pointer'}} onClick={()=> deleteComment(allComments?._id,comment?._id)}>Delete</span>
+                </div>):(null)}
                 </div>
                 <div className="reply">
 

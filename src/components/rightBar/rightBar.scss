@@ -31,6 +31,7 @@
 
         span {
           color: themed('textColorsoft');
+          margin-bottom: 2px;
         }
         .user {
           display: flex;
@@ -51,6 +52,7 @@
 
           .userInfo {
             display: flex;
+            justify-content: center;
             align-items: center;
             gap: 20px;
             position: relative;

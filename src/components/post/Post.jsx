@@ -72,11 +72,11 @@ function Post({ post }) {
 
   useEffect(() => {
     {
-      post.isLiked ? setLiked(true) : setLiked(false)
+      {post.likedUsers?.includes(user._id)?setLiked(true):setLiked(false)}
       {user.savedPost?.includes(post._id)?setSaved(true):setSaved(false)}
 
     }
-  }, [])
+  }, [post.id])
 
   const profileId = () => {
     localStorage.setItem('profileId', post.userId._id)
@@ -181,10 +181,6 @@ function Post({ post }) {
           <div className="item" onClick={() => setCommentOpen(!commentOpen)}>
             <MessageCircle2 className="commenticon" />
             Comments
-          </div>
-          <div className="item">
-            <SendIcon style={{ fontSize: '20px' }} />
-            Share
           </div>
           <div className="item">
             {saved ? (

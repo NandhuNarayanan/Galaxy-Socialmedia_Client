@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import './leftBar.scss'
 import HomeIcon from '@mui/icons-material/Home'
 import Brightness2Icon from '@mui/icons-material/Brightness2'
@@ -28,6 +28,7 @@ import Settings from '@mui/icons-material/Settings';
 import Logout from '@mui/icons-material/Logout';
 import { logOut } from '../../features/auth/authSlice'
 import Search from '../search/Search'
+import Notification from '../notification/Notification'
 
 function LeftBar() {
 
@@ -41,6 +42,7 @@ function LeftBar() {
 
   const [modalIsOpen, setModalIsOpen] = useState(false)
   const [searchModal, setSearchModal] = useState(false)
+  const [notificationModal, setNotificationModal] = useState(false)
 
   const { toggle, darkMode } = useContext(DarkModeContext)
 
@@ -71,6 +73,7 @@ function LeftBar() {
     dispatch(logOut())
     navigate('/login')
   }
+
  
 
   return (
@@ -119,7 +122,7 @@ function LeftBar() {
               <span>Message</span>
             </div>
             </Link>
-            <div className="item">
+            <div onClick={()=> setNotificationModal(true)} className="item">
               <CircleNotificationsIcon style={{ fontSize: '30px' }} />
               <span>Notification</span>
             </div>
@@ -225,6 +228,7 @@ function LeftBar() {
       </div>
       {modalIsOpen && <Model open={modalIsOpen} close={setModalIsOpen} />}
       {searchModal && <Search open={searchModal} close={setSearchModal} />}
+      {notificationModal && <Notification open={notificationModal} close={setNotificationModal} />}
       
     </>
   )

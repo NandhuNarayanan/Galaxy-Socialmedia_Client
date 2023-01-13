@@ -20,12 +20,11 @@ const style = {
   transform: 'translate(-50%, -50%)',
   width: 'auto',
   bgcolor: 'background.paper',
-  border: '2px solid #000',
+  borderRadius: '3%',
   boxShadow: 24,
   p: 4,
   display: 'flex,',
   border: 'none',
-  borderRadius: '4px',
 }
 
 const uploadButton = {

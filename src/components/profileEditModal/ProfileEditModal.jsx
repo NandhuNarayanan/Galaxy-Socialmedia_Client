@@ -11,6 +11,7 @@ import zIndex from '@mui/material/styles/zIndex'
 import { useSelector } from 'react-redux'
 import axios from 'axios'
 import { useFormik } from 'formik'
+import toast, { Toaster } from 'react-hot-toast';
 
 const style = {
   position: 'absolute',
@@ -20,7 +21,7 @@ const style = {
   width: 'auto',
   height: 'auto',
   bgcolor: 'background.paper',
-  border: '2px solid #000',
+  borderRadius: '3%',
   boxShadow: 24,
   p: 4,
   overflow: 'scroll',
@@ -100,7 +101,8 @@ function profileEditModal({ open, close }) {
   const [bio, setBio] = useState()
   const [location, setLocation] = useState()
   const [gender, setGender] = useState()
-  
+  const [coverPhoto, setCoverPhoto] = useState()
+
   const profileCoverRef = useRef()
 
   const CloudinaryRef = useRef()
@@ -116,7 +118,7 @@ function profileEditModal({ open, close }) {
         bio,
         location,
         gender,
-        user
+        user,
       })
       .then((response) => {
         setFname(response.data.userInfo.firstName)
@@ -173,51 +175,84 @@ function profileEditModal({ open, close }) {
       >
         <Fade in={open}>
           <Box sx={style}>
-          <form onSubmit={editInfo}>
-            <div style={titleStyle}>
-              <Typography
-                className="title"
-                id="transition-modal-title"
-                variant="h4"
-                component="h2"
-              >
-                Edit profile
-                <button type="submit">Save</button>
-              </Typography>
-            </div>
-            <div className="profileEdit">
-              <div className="images" style={imagesStyle}>
-                <img
-                  src="https://cdn.statically.io/img/timelinecovers.pro/facebook-cover/thumbs/life-cycle-facebook-cover.jpg"
-                  alt=""
-                  className="cover"
-                  style={coverStyle}
-                  onClick={() => profileCoverRef.current.click()}
-                />
-                <input type="file" hidden ref={profileCoverRef} />
-                {profilePicture ? (
-                  <img
-                    src={profilePicture}
-                    alt=""
-                    className="profilePic"
-                    style={profileStyle}
-                    onClick={openWidget}
-                  />
-                ) : (
-                  <img
-                    src="https://www.clipartmax.com/png/middle/296-2969961_no-image-user-profile-icon.png"
-                    alt=""
-                    className="profilePic"
-                    style={profileStyle}
-                    onClick={openWidget}
-                  />
-                )}
-                <div className="lconback" style={lconbackStyle}>
-                  <CameraPlus onClick={openWidget} style={cameraStyle} />
-                </div>
+            <form onSubmit={editInfo}>
+              <div style={titleStyle}>
+                <Typography
+                  className="title"
+                  id="transition-modal-title"
+                  variant="h4"
+                  component="h2"
+                >
+                  Edit profile
+                  <button type="submit">Save</button>
+                </Typography>
               </div>
-                
-              <div style={contentStyle}>
+              <div className="profileEdit">
+                <div className="images" style={imagesStyle}>
+                  <img
+                    src="https://cdn.statically.io/img/timelinecovers.pro/facebook-cover/thumbs/life-cycle-facebook-cover.jpg"
+                    alt=""
+                    className="cover"
+                    style={coverStyle}
+                    onClick={() => profileCoverRef.current.click()}
+                  />
+                  <input
+                    type="file"
+                    hidden
+                    ref={profileCoverRef}
+                    name="cover"
+                    accept="image/png,image/jpeg,image/webp"
+                    onChange={async (e) => {
+                      const file = e.target.files[0]
+
+                      SetCoverUrl(URL.createObjectURL(file))
+                      const form = new FormData()
+                      form.append('file', file)
+                      form.append('upload_preset', 'zwmavdgu')
+                      form.append('folder', 'coverImages')
+                      axios
+                        .post(
+                          `https://api.cloudinary.com/v1_1/dnz0safyt/image/upload`,
+                          form,
+                        )
+                        .then(async (res) => {
+                          const response = await axios
+                          .post('http://localhost:3001/post',{
+                         url:res.data.secure_url,
+                          }
+                          )
+                          if (response.data)
+                            toast({
+                              title: 'coverImageUpdated',
+                              status: 'success',
+                              isClosable: true,
+                            })
+                        })
+                    }}
+                  />
+                  {profilePicture ? (
+                    <img
+                      src={profilePicture}
+                      alt=""
+                      className="profilePic"
+                      style={profileStyle}
+                      onClick={openWidget}
+                    />
+                  ) : (
+                    <img
+                      src="https://www.clipartmax.com/png/middle/296-2969961_no-image-user-profile-icon.png"
+                      alt=""
+                      className="profilePic"
+                      style={profileStyle}
+                      onClick={openWidget}
+                    />
+                  )}
+                  <div className="lconback" style={lconbackStyle}>
+                    <CameraPlus onClick={openWidget} style={cameraStyle} />
+                  </div>
+                </div>
+
+                <div style={contentStyle}>
                   <input
                     style={{ height: '50px', margin: '1rem' }}
                     name="firstName"
@@ -250,9 +285,9 @@ function profileEditModal({ open, close }) {
                     placeholder="Gender"
                     onChange={(event) => setGender(event.target.value)}
                   />
+                </div>
               </div>
-            </div>
-                </form>
+            </form>
           </Box>
         </Fade>
       </Modal>
