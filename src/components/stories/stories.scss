@@ -3,15 +3,19 @@
     gap: 10px;
     height: 250px;
     margin-bottom: 30px;
-    overflow-x: scroll;
+    overflow-x: auto;
+    width: 690px;
     
+    &::-webkit-scrollbar{
+        display: none;
+    }
 
 .story{
     flex: 1;
     border-radius: 10px;
     overflow: hidden;
     position: relative;
-    max-width: 100%;
+    min-width: 13rem;
     img{
         width: 100%;
         height: 100%;

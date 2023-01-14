@@ -14,6 +14,7 @@ function StoryComponents() {
 
     const user = useSelector((state)=> state.auth.newUser);
 
+
     // const stories = [
     //     {
     //         id: 1,
@@ -45,6 +46,7 @@ function StoryComponents() {
         })
     },[])
 
+    console.log(viewStory,'asdjadkjweuhdjsancsdh;vealiul');
 
   return (
 <div className='stories'>
@@ -67,7 +69,7 @@ function StoryComponents() {
             </div>
         ))}
         {openStory && < Story open={openStory} close={setOpenStory} />}   
-        {viewStory&& <StoryWatch showStory={showStory} openStory={viewStory} closeStory={setViewStory} />}
+        <StoryWatch showStory={showStory} openStory={viewStory} closeStory={setViewStory} />
          </div>
   )
 }

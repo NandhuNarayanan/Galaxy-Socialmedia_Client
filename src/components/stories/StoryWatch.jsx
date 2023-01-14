@@ -1,53 +1,53 @@
-import React, { useState } from 'react';
-import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
-import Modal from '@mui/material/Modal';
-import './stories.scss'
+import React, { useEffect, useState } from 'react'
+import './storyWatch.scss'
+import Modal from 'react-modal'
+import { HexagonLetterX } from 'tabler-icons-react';
 
-const style = {
-  position: 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  width: 400,
-  bgcolor: 'background.paper',
-  border: '2px solid #000',
-  boxShadow: 24,
-  p: 4,
-};
+function StoryWatch({showStory , openStory, closeStory}) {
+   const [index, setIndex] = useState(0);
 
-const imageShow = {
-    height:50
-}
 
-export default function BasicModal({openStory, closeStory,showStory}) {
-  const [open, setOpen] = useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+   const mod = (n,m) =>{
+    let result = n % m;
+
+    //return a position value
+    return result >= 0 ? result : result + m;
+   };   
+
+   useEffect(()=>{
+    setTimeout(()=> {
+      setIndex((index + 1) % showStory.getStories.length);
+    },3000);
+   },[index]);
 
   return (
-    <div>
-      <Modal
-        open={openStory}
-        onClose={()=>closeStory(false)}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
-        <Box sx={style}>
-          <Typography id="modal-modal-title" variant="h6" component="h2">
-            Text in a modal
-          </Typography>
-          <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-          {showStory?.getStories?.map(story => (
-            <div onClick={()=> setViewStory(true)} className='story' key={story.id}>
-                <img style={imageShow} src={story.storyImg} alt="" /> 
-                <span>{story.userId.firstName} {story.userId.lastName}</span>
-            </div>
-        ))}
-          </Typography>
-        </Box>
-      </Modal>
-    </div>
-  );
+    <Modal className='storyView' isOpen={openStory}>
+      <div style={{height:'100px'}} onClick={()=> closeStory(false)} >
+        <HexagonLetterX/>
+      </div>
+    
+      <div className="carousel">
+      {showStory?.getStories?.map((item, i)=>{
+        const indexLeft = mod(index - 1, showStory.getStories.length);
+        const indexRight = mod(index + 1, showStory.getStories.length);
+
+        let className = "";
+        if (i === index) {
+          className = "card card--active";
+        }else if (i === indexRight){
+          className = "card card--right";
+        }else if (i === indexLeft){
+          className = "card card--left";
+        }else{
+          className = "card";
+        }
+
+        return( <img key={item._id} src={item.storyImg} alt="Story" className={className} /> )
+      })}
+
+      </div>
+    </Modal>
+  )
 }
+
+export default StoryWatch
