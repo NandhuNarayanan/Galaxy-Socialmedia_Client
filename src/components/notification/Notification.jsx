@@ -13,10 +13,13 @@ const style = {
   left: '32%',
   transform: 'translate(-50%, -50%)',
   width: 400,
+  height: 700,
   bgcolor: 'background.paper',
-  borderRadius: '3%',
+  borderRadius: '2%',
   boxShadow: 24,
   p: 4,
+  overflowY: 'scroll',
+  
 }
 
 const inputStyle = {
@@ -47,6 +50,7 @@ export default function BasicModal({ open, close }) {
           </Typography>
           <hr style={{ width: '85%', border: '0.1px solid #ececec' }} />
           <div>
+          {userNotification ?.length < 1 ? <h1>No Notifications</h1> : null}
             {userNotification?.map((obj, index) => {
               return (
                 <>

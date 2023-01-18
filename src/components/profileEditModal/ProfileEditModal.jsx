@@ -102,6 +102,7 @@ function profileEditModal({ open, close }) {
   const [location, setLocation] = useState()
   const [gender, setGender] = useState()
   const [coverPhoto, setCoverPhoto] = useState()
+  const [coverFile, setCoverFile] = useState('')
 
   const profileCoverRef = useRef()
 
@@ -160,6 +161,31 @@ function profileEditModal({ open, close }) {
     )
   }, [profilePicture])
 
+  const uploadCoverImage = () => {
+    const formData = new FormData()
+    console.log(storyImageSelected)
+    formData.append('file', storyImageSelected)
+    formData.append('upload_preset', 'k4obttho')
+  
+    axios
+      .post('https://api.cloudinary.com/v1_1/dnz0safyt/image/upload', 
+      formData
+      )
+      .then((response) => {
+        console.log(response)
+        const storyUrl = response.data.secure_url
+        return axios
+        .post('http://localhost:3001/profile/uploadCover', {
+          storyUrl,
+          user,
+        })
+        .then((response) => {
+          console.log(response)
+        })
+      })
+    close(false)
+  }
+
   return (
     <div>
       <Modal
@@ -175,7 +201,7 @@ function profileEditModal({ open, close }) {
       >
         <Fade in={open}>
           <Box sx={style}>
-            <form onSubmit={editInfo}>
+            <form onSubmit={{editInfo,uploadCoverImage}}>
               <div style={titleStyle}>
                 <Typography
                   className="title"
@@ -190,7 +216,7 @@ function profileEditModal({ open, close }) {
               <div className="profileEdit">
                 <div className="images" style={imagesStyle}>
                   <img
-                    src="https://cdn.statically.io/img/timelinecovers.pro/facebook-cover/thumbs/life-cycle-facebook-cover.jpg"
+                    src={coverPhoto? coverFile : "https://images.pexels.com/photos/3255761/pexels-photo-3255761.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"}
                     alt=""
                     className="cover"
                     style={coverStyle}
@@ -201,33 +227,9 @@ function profileEditModal({ open, close }) {
                     hidden
                     ref={profileCoverRef}
                     name="cover"
-                    accept="image/png,image/jpeg,image/webp"
-                    onChange={async (e) => {
-                      const file = e.target.files[0]
-
-                      SetCoverUrl(URL.createObjectURL(file))
-                      const form = new FormData()
-                      form.append('file', file)
-                      form.append('upload_preset', 'zwmavdgu')
-                      form.append('folder', 'coverImages')
-                      axios
-                        .post(
-                          `https://api.cloudinary.com/v1_1/dnz0safyt/image/upload`,
-                          form,
-                        )
-                        .then(async (res) => {
-                          const response = await axios
-                          .post('http://localhost:3001/post',{
-                         url:res.data.secure_url,
-                          }
-                          )
-                          if (response.data)
-                            toast({
-                              title: 'coverImageUpdated',
-                              status: 'success',
-                              isClosable: true,
-                            })
-                        })
+                    onChange={(event) => {
+                      setCoverPhoto(event.target.files[0]);
+                      setCoverFile(URL.createObjectURL(event.target.files[0]));
                     }}
                   />
                   {profilePicture ? (
@@ -240,7 +242,7 @@ function profileEditModal({ open, close }) {
                     />
                   ) : (
                     <img
-                      src="https://www.clipartmax.com/png/middle/296-2969961_no-image-user-profile-icon.png"
+                      src="https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png?20150327203541"
                       alt=""
                       className="profilePic"
                       style={profileStyle}

@@ -1,0 +1,27 @@
+.AppGlass{
+    background: #bdc3c7;  /* fallback for old browsers */
+background: -webkit-linear-gradient(to right, #2c3e50, #bdc3c7);  /* Chrome 10-25, Safari 5.1-6 */
+background: linear-gradient(to right, #2c3e50, #bdc3c7); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+height: 100vh;
+display: flex;
+justify-content: center;
+align-items: center;
+font-family: 'Inter' ,sans-serif;
+
+.AppContainer{
+    display: grid;
+    height: 97%;
+    width: 97%;
+    border-radius: 2rem;
+    background-color: lightgray;
+    overflow: hidden;
+    grid-template-columns: 11rem auto 20rem;
+}
+}
+
+@media screen and (max-width: 1200px) {
+    .AppContainer{
+        grid-template-columns: 10% 50% auto;
+        overflow-y: scroll;
+    }
+}

@@ -15,30 +15,7 @@ function StoryComponents() {
     const user = useSelector((state)=> state.auth.newUser);
 
 
-    // const stories = [
-    //     {
-    //         id: 1,
-    //         name: "Aswandh",
-    //         img:"https://images.pexels.com/photos/13222469/pexels-photo-13222469.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-    //     },
-    //     {
-    //         id: 2,
-    //         name: "Aswandh",
-    //         img:"https://images.pexels.com/photos/13222469/pexels-photo-13222469.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-    //     },
-    //     {
-    //         id: 3,
-    //         name: "Aswandh",
-    //         img:"https://images.pexels.com/photos/13222469/pexels-photo-13222469.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-    //     },
-    //     {
-    //         id: 4,
-    //         name: "Aswandh",
-    //         img:"https://images.pexels.com/photos/13222469/pexels-photo-13222469.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-    //     },
-      
-    // ];
-
+    
     useEffect(()=>{
         axios.get('http://localhost:3001/story/getStory').then((response)=>{
             console.log(response);

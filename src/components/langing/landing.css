@@ -1,0 +1,158 @@
+body{
+    overflow-x: hidden;
+}
+li{
+    list-style-type: none !important;
+}
+.main-div{
+    background-color: #222;
+    height: 114vh;
+}
+
+.header-left{
+    position: absolute;
+    left: 40px;
+    top: -10px;
+    color: white;
+}
+
+.header-left h2{
+    font-size: 50px;
+    font-weight: 600;
+}
+
+.header-right ul{
+    position: absolute;
+    right: 20px;
+    top: 10px;
+    width: 20px;
+    height: 30px;
+    cursor: pointer;
+}
+
+.header-right ul li{
+    list-style: none;
+    position: absolute;
+    background: #222;
+    width: 50%;
+}
+
+.header-right ul li:nth-of-type(1){
+    top: 20%;
+}
+.header-right ul li:nth-of-type(2){
+    top: 50%;
+}
+.header-right ul li:nth-of-type(3){
+    top: 80%;
+    width: 50%;
+}
+
+.header-right ul li:nth-of-type(1),
+ul li:nth-of-type(2),
+ul li:nth-of-type(3){
+    left: 0;
+}
+
+
+/* main styling */
+
+.transparent-text{
+    position: absolute;
+    left: -10px;
+    bottom: 600;
+}
+
+.transparent-text-heading{
+    font-size: 400px;
+    color: rgba(250, 197, 36, 0.2);
+    
+}
+
+.tt-span-one{
+    position: absolute;
+    top: 0px;
+    left: -70px;
+    z-index: 1;
+}
+
+.tt-span-two{
+    position: absolute;
+    top: 305px;
+    left: 11px;
+    z-index: 1;
+}
+
+
+.orange-main{
+height: 100vh;
+}
+
+.orange-subsec1{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 245px;
+}
+
+.head-main{
+font-size: 200px;
+color: rgb(199,115,115);
+z-index: 2;
+}
+
+.head-left{
+    z-index: 2;
+}
+
+.astronaut{
+    height: 200px;
+    width: 200px;
+    margin-bottom: -20px;
+}
+
+.orange-diag{
+    height: 300px;
+    width: 300px;
+    position: absolute;
+    right: 221px;
+    top: 225px;
+    background-color: rgba(119, 115, 115, 0.3);
+    clip-path: polygon(25% 0%, 100% 0%, 75% 100%, 0% 100%);
+    z-index: 1;
+}
+
+.orange-subsec1 p{
+    position: absolute;
+    width: 300px !important;
+    font-style: italic;
+    color: rgba(233, 232, 232, 0.7);
+    right: 44px;
+    top: 230px;
+}   
+
+.o1{
+    position: absolute;
+    bottom: -100px;
+    right: -80px;
+}
+
+.log{
+    position: absolute;
+    left: 90px;
+    bottom: 8px;
+    
+}
+
+.log p{
+font-weight: 600;
+font-size: 20px;
+color: aliceblue;
+cursor: pointer;
+}
+
+.o1 img{
+    height: 200px;
+    width: 200px;
+    margin: 60px;
+}

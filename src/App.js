@@ -9,13 +9,19 @@ import './style.scss'
 import { useContext } from 'react'
 import { DarkModeContext } from './context/darkModeContext'
 import RequireAuth from './features/auth/RequireAuth'
-import Landing from './components/Landing'
+import Landing from './components/langing/Landing'
 import { useSelector } from 'react-redux'
 import Explore from './components/explore/Explore'
 import Chat from './pages/chat/Chat'
+import AdminHome from './pages/admin/AdminHome'
+import AdminLogin from './components/adminLogin/AdminLogin'
+
+
 
 function App() {
 const auth = useSelector(state =>state.auth)
+
+console.log(auth,'auth');
 
 
   const currentUser =auth.token;
@@ -51,6 +57,18 @@ const auth = useSelector(state =>state.auth)
     )
   }
 
+  const Layout2 = () => {
+    return (
+      <div className={`theme-${darkMode ? 'dark' : 'light'}`}>
+        <div style={{ display: 'flex' }}>
+          <div style={{ flex: 6 }}>
+          <Outlet/>
+          </div>
+        </div>
+      </div>
+    )
+  }
+
 const ProtectedRoute = ({ children }) => {
     if (!currentUser) {
       return <Navigate to='/login' />
@@ -60,6 +78,12 @@ const ProtectedRoute = ({ children }) => {
   const ProtectedRoute1 = ({ children }) => {
     if (!currentUser) {
       return <Navigate to='/login' />
+    }
+    return children
+  };
+  const ProtectedRoute2 = ({ children }) => {
+    if (!currentUser) {
+      return <Navigate to='/admin' />
     }
     return children
   };
@@ -87,6 +111,10 @@ const ProtectedRoute = ({ children }) => {
       ]
     },
     {
+      path: '/login',
+      element: <FormComponent />
+    },
+    {
       path:'/',
       element:<ProtectedRoute1><Layout1/></ProtectedRoute1>,
       children:[
@@ -97,13 +125,25 @@ const ProtectedRoute = ({ children }) => {
       ]
     },
     {
-      path: '/login',
-      element: <FormComponent />
+      path:'/',
+      element:<ProtectedRoute2><Layout2/></ProtectedRoute2>,
+      children:[
+        {
+          path: '/adminHome',
+          element: <AdminHome />
+        },
+      ]
     },
+    {
+      path: '/admin',
+      element: <AdminLogin />
+    },
+   
      
   ])
   return (
     <div className="App">
+      
      <RouterProvider router={router}/>
     </div>
   )

@@ -25,6 +25,7 @@ function Rightbar() {
         </div>
         <div className="item">
           <span>Latest Activities</span>
+          
               {userNotification?.map((obj, index) => {
                 return (
                   <>
@@ -49,6 +50,7 @@ function Rightbar() {
                   </>
                 )
               })}
+              {userNotification ?.length < 1 ? <h2>No Notifications</h2> : null}
               </div>
 
 

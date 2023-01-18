@@ -2,6 +2,30 @@ import React, { useEffect, useState } from 'react'
 import FollowButton from '../followComponents/FollowButton'
 import { useSelector } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
+import axios from 'axios'
+
+
+const followButtonStyle = {
+  backgroundColor: "green",
+  color: "white",
+  padding: 5,
+  borderRadius: "15px",
+  width: "80px",
+  fontSize: "12PX",
+  border: "0px ",
+  cursor: "pointer",
+}
+
+const followingButtonStyle = {
+backgroundColor: "grey",
+color: "white",
+padding: 5,
+borderRadius: "15px",
+width: "80px",
+fontSize: "12PX",
+border: "0px ",
+cursor: "pointer",
+};
 
 function Suggestion({ user}) {
   const loginUser = useSelector((state) => state.auth.newUser)
@@ -14,6 +38,47 @@ function Suggestion({ user}) {
     localStorage.setItem('profileId', post.userId._id)
     navigate(`/profile/${post.userId._id}`)
   }
+
+  const [following, setFollowing] = useState()
+  const [followCheck, setFollowCheck ] = useState({})
+  const [followCount, setfollowCount] = useState()
+
+  const profile =  localStorage.getItem('profileId')
+
+  const {token} = useSelector(state=>state.auth)
+  const userId = loginUser._id
+
+  const follow = (followUserId)=>{
+      axios.patch('http://localhost:3001/profile/follow',{
+      followUserId,user
+      }).then((response)=>{
+        if (response.data.followingUser) {
+          setFollowing(true)
+          setfollowCount(followCount+1)
+        }else {
+          setFollowing(false)
+          setfollowCount(followCount-1)
+        }
+      }).catch((error) => console.log(error))
+    }
+
+    const userid = loginUser._id
+    useEffect(()=>{
+      // const token = localStorage.getItem('auth')
+
+      axios.get(`http://localhost:3001/getUsers/${userid}`,{headers:{authorization:`bearer ${token}`}}).then((response)=>{
+        console.log(response,"ooo")
+        if(response.data){
+          console.log(response.data.newUser?.following,'99')
+          // setFollowCheck(response.data.newUser?.following)
+          // console.log(followCheck,90)
+          setfollowCount(response.data.newUser?.following.length)
+          const status = response.data.newUser?.following?.includes(profile) 
+          setFollowing(status)
+        }
+        
+      })
+    },[])
 
 
 
@@ -30,7 +95,9 @@ function Suggestion({ user}) {
       )}
       <span>{user.firstName}</span>
       <div className="buttons">
-        <FollowButton isFollowed={isFollowed} followUserId={user._id} />
+      <div className="top" >
+      <button style={following ? followingButtonStyle : followButtonStyle } onClick={() => {follow(followUserId)}}>{following? 'Following' :  'Follow'  }</button>
+    </div>
       </div>
     </div>
     </Link>

@@ -17,6 +17,7 @@ import IconButton from '@mui/material/IconButton'
 import Menu from '@mui/material/Menu'
 import MenuItem from '@mui/material/MenuItem'
 import MoreVertIcon from '@mui/icons-material/MoreVert'
+import UserReport from '../postReportTable/UserReport'
 
 function Post({ post }) {
   const [commentOpen, setCommentOpen] = useState(false)
@@ -25,9 +26,13 @@ function Post({ post }) {
   const [saved, setSaved] = useState(false)
   const [anchorEl, setAnchorEl] = useState(null)
 
+  const [reportPost, setReportPost] = useState(false)
+  
+
   const navigate = useNavigate()
   const dispatch = useDispatch()
   const user = useSelector((state) => state.auth.newUser)
+  const postId = post._id
 
   const postLiked = (id) => {
     axios
@@ -74,9 +79,8 @@ function Post({ post }) {
     {
       {post.likedUsers?.includes(user._id)?setLiked(true):setLiked(false)}
       {user.savedPost?.includes(post._id)?setSaved(true):setSaved(false)}
-
     }
-  }, [post.id])
+  }, [postId])
 
   const profileId = () => {
     localStorage.setItem('profileId', post.userId._id)
@@ -146,11 +150,11 @@ function Post({ post }) {
           >
             {post.userId?._id == user?._id ? (
               <>
-                <MenuItem onClick={()=>postDelete(post._id)}>Delete</MenuItem>
-                <MenuItem onClick={handleClose}>Edit</MenuItem>
+                <MenuItem onClick={()=>{postDelete(post._id);handleClose(false)}}>Delete</MenuItem>
+                <MenuItem onClick={handleClose} >Edit</MenuItem>
               </>
             ) : (
-              <MenuItem onClick={handleClose}>Report</MenuItem>
+              <MenuItem onClick={()=> {setReportPost(true);handleClose(false)}}>Report</MenuItem>
             )}
           </Menu>
         </div>
@@ -198,6 +202,9 @@ function Post({ post }) {
         </div>
         {commentOpen && (
           <Comments postId={post._id} style={{ fontSize: '30px' }} />
+        )}
+          {reportPost && (
+          <UserReport open={reportPost} close={setReportPost} postId={post._id} />
         )}
       </div>
     </div>

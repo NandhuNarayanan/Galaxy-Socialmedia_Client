@@ -5,6 +5,28 @@ import { useParams } from 'react-router-dom'
 import '../../pages/profile/profile.scss'
 import Profile from '../../pages/profile/Profile'
 
+const followButtonStyle = {
+  backgroundColor: "green",
+  color: "white",
+  padding: 5,
+  borderRadius: "15px",
+  width: "80px",
+  fontSize: "12PX",
+  border: "0px ",
+  cursor: "pointer",
+}
+
+const followingButtonStyle = {
+backgroundColor: "grey",
+color: "white",
+padding: 5,
+borderRadius: "15px",
+width: "80px",
+fontSize: "12PX",
+border: "0px ",
+cursor: "pointer",
+};
+
 function FollowButton({followUserId,isFollowed}) {
 
   const [following, setFollowing] = useState(isFollowed)
@@ -14,6 +36,7 @@ function FollowButton({followUserId,isFollowed}) {
   const profile =  localStorage.getItem('profileId')
 
   const userId = useSelector(state => state.auth.newUser)
+  const {token} = useSelector(state=>state.auth)
   const user = userId._id
 
   const follow = (followUserId)=>{
@@ -32,22 +55,30 @@ function FollowButton({followUserId,isFollowed}) {
 
     const userid = userId._id
     useEffect(()=>{
-      axios.get(`http://localhost:3001/getUsers/${userid}`).then((response)=>{
+      // const token = localStorage.getItem('auth')
+
+      axios.get(`http://localhost:3001/getUsers/${userid}`,{headers:{authorization:`bearer ${token}`}}).then((response)=>{
+        console.log(response,"ooo")
         if(response.data){
-          setFollowCheck(response.data.newUser)
+          console.log(response.data.newUser?.following,'99')
+          // setFollowCheck(response.data.newUser?.following)
+          // console.log(followCheck,90)
+          setfollowCount(response.data.newUser?.following.length)
+          const status = response.data.newUser?.following?.includes(profile) 
+          setFollowing(status)
         }
         
       })
     },[])
     
-  useEffect(()=>{
-    {followCheck?.following?.includes(profile)? setFollowing(true):setFollowing(false)}
+  // useEffect(()=>{
+  
+    // followCheck?.includes(profile)? setFollowing(true):setFollowing(false)
     
-  },[followCheck])
+  // },[])
   return (
     <div className="top" >
-     {/* {following?(<button className='followingButton' onClick={follow} style={{backgroundColor:'gray'}}>Following</button>): (<button onClick={follow}>Follow</button>)} */}
-      <button className='followingButton' onClick={() => {follow(followUserId)}}>{following ? 'Following' : 'Follow' }</button>
+      <button style={following ? followingButtonStyle : followButtonStyle } onClick={() => {follow(followUserId)}}>{following? 'Following' :  'Follow'  }</button>
     </div>
   )
 }

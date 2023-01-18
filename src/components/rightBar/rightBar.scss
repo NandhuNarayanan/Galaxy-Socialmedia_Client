@@ -25,6 +25,7 @@
         margin-bottom: 20px;
         background-color: themed(bg);
 
+
         .suggestion {
           font-size: 14px;
         }
@@ -57,6 +58,10 @@
             gap: 20px;
             position: relative;
             font-size: 13px;
+            overflow-y: scroll;
+          &::-webkit-scrollbar {
+            display: none;
+          }
 
             img {
               width: 40px;

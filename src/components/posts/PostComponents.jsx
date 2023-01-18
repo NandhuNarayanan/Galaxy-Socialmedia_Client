@@ -7,8 +7,8 @@ import './posts.scss'
 function PostComponents() {
 
     const [posts, setPosts] = useState([])
+    // const refresh = useSelector((state) => state.refresh.refresh);
 
-  const postId = posts._id
 
 
     useEffect(()=>{
@@ -16,7 +16,7 @@ function PostComponents() {
             setPosts(response.data)
         })
         
-    },[postId])
+    },[])
 
 
   return (

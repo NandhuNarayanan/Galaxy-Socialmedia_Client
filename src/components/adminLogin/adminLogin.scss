@@ -1,0 +1,60 @@
+ @import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,300;0,400;1,400&display=swap');
+
+
+.loginBG{
+    background: #bdc3c7;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #2c3e50, #bdc3c7);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #2c3e50, #bdc3c7); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Roboto Mono', monospace;
+
+    .cover{
+        background-color: white;
+        width: 35em;
+        height: 40em;
+        position: relative;
+        border-radius: 1em;
+        box-shadow: 0 0.188em 1.550em rgb(156, 156, 156);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-around;
+        
+        h1{
+            span{
+                color:  rgba(195, 171, 51, 0.885);
+            }
+        }
+
+        .userInput{
+
+            input {
+                border: none;
+                background-color: rgb(229, 226, 226);
+                height: 4em;
+                width: 90%;
+                border-radius: 0.25em;
+                text-align: center;
+                padding: 2em;
+                &:focus {
+                    outline-color:rgb(32, 177, 255) ;
+                }
+            }
+        }
+
+        .login-btn{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            background-color: grey;
+            border-radius: 10%;
+            height: 2em;
+            width: 6em;
+        }
+    }
+}
+

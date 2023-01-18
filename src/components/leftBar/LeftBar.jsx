@@ -29,12 +29,15 @@ import Logout from '@mui/icons-material/Logout';
 import { logOut } from '../../features/auth/authSlice'
 import Search from '../search/Search'
 import Notification from '../notification/Notification'
+import axios from 'axios'
 
 function LeftBar() {
 
   const location = useLocation()
   const user = useSelector((state) => state.auth.newUser)
   const local = localStorage.getItem('auth')
+  const {token} = useSelector(state=>state.auth)
+  const userid = user._id
 
   const navigate = useNavigate()
 
@@ -46,20 +49,7 @@ function LeftBar() {
 
   const { toggle, darkMode } = useContext(DarkModeContext)
 
-  // const menuItem = document.querySelectorAll('.item')
-
-  // const removeActiveClass = () => {
-  //   menuItem.forEach(item => {
-  //     item.classList.remove('active')
-  //   })
-  // }
-
-  // menuItem.forEach(item => {
-  //   item.addEventListener('click',() => {
-  //     removeActiveClass()
-  //     item.classList.add('active')
-  //   })
-  // })
+ 
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -70,6 +60,9 @@ function LeftBar() {
   };
 
   const handleLogout = () => {
+    axios.get(`http://localhost:3001/logout/${userid}`,{
+      headers:{authorization: token}
+    })
     dispatch(logOut())
     navigate('/login')
   }
@@ -138,7 +131,7 @@ function LeftBar() {
                   src={user.profilePicture}
                   alt=""
                 />:<img
-                  src="https://www.clipartmax.com/png/middle/296-2969961_no-image-user-profile-icon.png"
+                  src="https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png?20150327203541"
                   alt=""
                 />}
                 <span>{user.firstName ? user.firstName : null}</span>
