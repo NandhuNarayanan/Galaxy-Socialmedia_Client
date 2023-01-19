@@ -1,18 +1,15 @@
 body{
     overflow-x: hidden;
 }
-li{
-    list-style-type: none !important;
-}
 .main-div{
     background-color: #222;
-    height: 114vh;
+    overflow-y: hidden;
 }
 
 .header-left{
     position: absolute;
     left: 40px;
-    top: -10px;
+    top: 0;
     color: white;
 }
 
@@ -77,7 +74,7 @@ ul li:nth-of-type(3){
 }
 
 .tt-span-two{
-    position: absolute;
+    position: fixed;
     top: 305px;
     left: 11px;
     z-index: 1;
@@ -132,7 +129,7 @@ z-index: 2;
 }   
 
 .o1{
-    position: absolute;
+    position: fixed;
     bottom: -100px;
     right: -80px;
 }
@@ -141,10 +138,11 @@ z-index: 2;
     position: absolute;
     left: 90px;
     bottom: 8px;
+    cursor: pointer;
     
 }
 
-.log p{
+.log h3{
 font-weight: 600;
 font-size: 20px;
 color: aliceblue;

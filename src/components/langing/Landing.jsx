@@ -1,14 +1,16 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import './landing.css'
 import astronaut from '../../assets/image/astronaut.png'
 import Logo from '../../assets/image/logo_for_galaxy1.png'
 
 function Landing() {
+
+  const navigate = useNavigate()
   return (
-    <div className='main-div'>
+    <div onClick={()=> navigate('/login')} className='main-div'>
     <div className="headerBar">
-      <div className="header-left">
+      <div  className="header-left">
         <h2>Galaxy.</h2>
       </div>
       <div className="header-right">
@@ -33,13 +35,12 @@ function Landing() {
           <img className='astronaut' src={astronaut} alt="" />
           <span className='head-right' >AXY</span>
         </h1>
-        <p> We are all stars in this galaxy. However alert we are, antiquity remains an unknown, unanticipated galaxy.</p>
+        <p > We are all stars in this galaxy. However alert we are, antiquity remains an unknown, unanticipated galaxy.</p>
       </div>
-      <Link to='/login'>
-      <div className="log">
-        <p>→TO SIGNIN</p>
+      
+      <div  className="log">
+        <h3  >→TO SIGNIN</h3>
       </div>
-      </Link>
       <div className="o1">
         <img src={Logo} alt="" />
       </div>

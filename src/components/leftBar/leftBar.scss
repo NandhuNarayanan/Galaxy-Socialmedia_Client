@@ -8,8 +8,13 @@
     height: calc(100vh - 0px);
     background-color: themed("bg");
     color: themed("textColor");
+
     .container{
         padding: 20px;
+        @include mobile{
+        width: 80px;
+        
+    }
        .menu{
         display: flex;
         flex-direction: column;
@@ -36,10 +41,19 @@
                     justify-content: center;
                     color: themed("logo");
                     flex-direction: row;
+                    
+                    @include mobile{
+                        display: none;
+                    }
+                    
                 }
                 span{
                     cursor: pointer;
                     font-size: 16px;
+                    @include mobile{
+                        display: none;
+                    }
+                   
                 }
                 
             
@@ -61,19 +75,32 @@
             span{
                 cursor: pointer;
                 font-size: 16px;
+
+                @include mobile{
+                    display: none;
+                }
             } 
         }
         .menu-bar{
             display: flex;
             align-items:center ;
             gap: 10px;
-
             margin-top: 200px;
 
+            @include mobile{
+                display: flex;
+                justify-content: center;
+                align-items:center ;
+                margin-left: 3rem;
+            }
             
             span{
                 cursor: pointer;
                 font-size: 20px;
+
+                @include mobile{
+                    display: none;
+                }
 
             }
         }

@@ -21,10 +21,14 @@ import AdminLogin from './components/adminLogin/AdminLogin'
 function App() {
 const auth = useSelector(state =>state.auth)
 
+const admin = useSelector(state =>state.admin)
+
 console.log(auth,'auth');
 
 
   const currentUser =auth.token;
+
+  const currentAdmin =admin.token;
 
   const { darkMode } = useContext(DarkModeContext)
 
@@ -82,7 +86,7 @@ const ProtectedRoute = ({ children }) => {
     return children
   };
   const ProtectedRoute2 = ({ children }) => {
-    if (!currentUser) {
+    if (!currentAdmin) {
       return <Navigate to='/admin' />
     }
     return children

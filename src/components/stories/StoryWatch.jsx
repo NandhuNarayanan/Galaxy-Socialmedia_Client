@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import './storyWatch.scss'
-import Modal from 'react-modal'
+import Modal from '@mui/material/Modal';
 import { HexagonLetterX } from 'tabler-icons-react'
+import Box from '@mui/material/Box';
  
 const storie = {
 
@@ -16,6 +17,18 @@ const storie = {
       fontSize: '14.5px',  
        
   }
+  const style = {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: '100%',
+    height:'100vh',
+    bgcolor: 'background',
+    border: '2px solid #000',
+    boxShadow: 24,
+    p: 4,
+  };
 
 function StoryWatch({ showStory, openStory, closeStory }) {
   const [index, setIndex] = useState(0)
@@ -30,11 +43,17 @@ function StoryWatch({ showStory, openStory, closeStory }) {
   useEffect(() => {
     setTimeout(() => {
       setIndex((index + 1) % showStory.getStories.length)
-    }, 5000)
+    }, 8000)
   }, [index])
 
   return (
-    <Modal className="storyView" isOpen={openStory}>
+    <>
+    <Modal
+    open={openStory}
+        onClose={()=> closeStory(false)}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description" className="storyView" >
+          <Box sx={style}>
       <div onClick={() => closeStory(false)}>
         <HexagonLetterX />
       </div>
@@ -70,7 +89,9 @@ function StoryWatch({ showStory, openStory, closeStory }) {
           )
         })}
       </div>
+      </Box>
     </Modal>
+    </>
   )
 }
 

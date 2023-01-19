@@ -12,6 +12,7 @@ import Fade from '@mui/material/Fade'
 import Button from '@mui/material/Button'
 import Typography from '@mui/material/Typography'
 import Fab from '@mui/material/Fab'
+import { toast } from 'react-hot-toast'
 
 const style = {
   position: 'absolute',
@@ -75,6 +76,12 @@ function Modals({ open, close }) {
             caption,
           })
           .then((response) => {
+            toast.success(response.data, {
+              style: {
+                width: '80px',
+                height: '80px'
+              },
+            })
             console.log(response)
           })
       })

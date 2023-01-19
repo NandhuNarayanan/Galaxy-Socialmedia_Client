@@ -34,7 +34,13 @@ export default function BasicModal({ open, close }) {
   const userNotification = useSelector(
     (state) => state.auth.newUser.notification,
   )
-  console.log(userNotification, 'user')
+
+  const userId = useSelector((state) => state.auth.newUser)
+
+  const profileId = () => {
+    localStorage.setItem('profileId', userId._id)
+    navigate(`/profile/${userId._id}`)
+  }
 
   return (
     <div>
@@ -55,7 +61,7 @@ export default function BasicModal({ open, close }) {
               return (
                 <>
                   <div className="followUser">
-                    <Link>
+                    <Link onClick={profileId}>
                       <div className="followUserInfo">
                         <img
                           src={

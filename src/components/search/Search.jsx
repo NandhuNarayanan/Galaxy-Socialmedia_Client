@@ -5,6 +5,7 @@ import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 const style = {
   position: 'absolute',
@@ -31,9 +32,11 @@ export default function BasicModal({open,close}) {
 
   const navigate = useNavigate()
 
+  const userId = useSelector((state) => state.auth.newUser)
+
   const profileId = () => {
-    localStorage.setItem('profileId', post.userId._id)
-    navigate(`/profile/${post.userId._id}`)
+    localStorage.setItem('profileId', userId._id)
+    navigate(`/profile/${userId._id}`)
   }
 
 

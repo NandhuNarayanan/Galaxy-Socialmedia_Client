@@ -5,11 +5,22 @@ import {UilSignOutAlt} from '@iconscout/react-unicons';
 
 import { AdminSidebarData } from '../Data/Data'
 import { pathChange } from '../../context/context';
+import { adminlogOut } from '../../features/auth/adminSlice';
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 function AdminSidebar() {
 const {path , setPath} = useContext(pathChange)
     const [selected, setSelected] = useState(0)
 
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+
+
+    const handleLogout = () => {
+      dispatch(adminlogOut())
+      navigate('/admin')
+    }
 
   return (
     <div className="AdminSidebar">
@@ -34,7 +45,7 @@ const {path , setPath} = useContext(pathChange)
             )
         })}
 
-        <div className="menuItem">
+        <div onClick={handleLogout} className="menuItem">
             <UilSignOutAlt/>
             Logout
         </div>

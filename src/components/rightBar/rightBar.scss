@@ -7,7 +7,14 @@
     position: sticky;
     overflow: scroll;
     height: calc(100vh - 0px);
-    background-color: themed(bgSoft);
+    background-color: themed('bgSoft');
+
+    @include mobile{
+      display: none;
+    }
+    @include tablet{
+      display: none;
+    }
 
     &::-webkit-scrollbar {
       display: none;

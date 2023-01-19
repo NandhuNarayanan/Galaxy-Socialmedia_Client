@@ -96,6 +96,12 @@ const uploadStoryImage = () => {
       })
       .then((response) => {
         console.log(response)
+        toast.success(response.data, {
+          style: {
+            width: '80px',
+            height: '80px'
+          },
+        })
       })
     })
   close(false)

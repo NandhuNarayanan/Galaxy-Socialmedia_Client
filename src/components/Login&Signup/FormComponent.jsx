@@ -2,6 +2,7 @@ import { transform } from 'framer-motion'
 import React, { useEffect, useRef, useState } from 'react'
 import styled, { keyframes } from 'styled-components'
 import { TouchBallLoading } from 'react-loadingg'
+import jwt_decode from 'jwt-decode'
 
 import { useDispatch } from 'react-redux'
 import { setCredentials } from '../../features/auth/authSlice'
@@ -10,6 +11,9 @@ import { useNavigate } from 'react-router-dom'
 import { useFormik } from 'formik'
 import axios from 'axios'
 import imgLogo from '../../assets/image/logo_for_galaxy1.png'
+import './formcomponent.scss'
+
+
 
 const move = keyframes`
 0%{
@@ -252,6 +256,7 @@ function FormComponent() {
   const [errMsg, setErrMsg] = useState('')
   const navigate = useNavigate()
 
+
   const [login, { isLoading }] = useLoginMutation()
   const dispatch = useDispatch()
 
@@ -265,7 +270,7 @@ function FormComponent() {
     e.preventDefault()
 
     try {
-      axios.post('http://localhost:3001/login',
+     await axios.post('http://localhost:3001/login',
       {
        email:user,
        password
@@ -354,13 +359,41 @@ function FormComponent() {
     validate,
     
   })
+
+  const handleCallbackResponse = (response) => {
+    console.log('Encoded JWT ID token:' + response.credential);
+    let userObject = jwt_decode(response.credential);
+    console.log(userObject);
+    axios.post('http://localhost:3001/google',{
+        userObject
+    }).then((response)=>{
+      console.log(response);
+      dispatch(setCredentials(response.data))
+      navigate('/home')
+
+    })
+  }
+
+  useEffect(()=>{
+    /* global google */
+    google.accounts.id.initialize({
+      client_id: "420211100128-eauuv9qnga3a2g2134ph12g7h405c9rv.apps.googleusercontent.com",
+      callback: handleCallbackResponse
+    })
+
+    google.accounts.id.renderButton(
+      document.getElementById("signInDiv"),
+      {theme:"outline", size:"large"}
+    );
+  },[])
+
   return (
-    <>
+    <div className='component'>
       {' '}
       {isLoading ? (
         <TouchBallLoading />
       ) : (
-        <BackgroundBox clicked={click}>
+        <BackgroundBox className='box' clicked={click}>
           <ButtonAnimate clicked={click} onClick={handleClick}></ButtonAnimate>
           <Form onSubmit={handleSubmit} className="signin">
             <Title>Sign In</Title>
@@ -383,6 +416,10 @@ function FormComponent() {
             />
             <Link href="#">Forgot Your Password?</Link>
             <Button>Sign In</Button>
+            <div style={{paddingTop:'2rem'}}>
+            <h3>Or</h3>
+            <div id="signInDiv"></div>
+            </div>
           </Form>
 
           <Form className="signup" onSubmit={formik.handleSubmit}>
@@ -461,6 +498,7 @@ function FormComponent() {
               Already have an Account
             </Link>
             <Button type="submit">Sign Up</Button>
+          
           </Form>
 
           <Text className="text1" clicked={click}>
@@ -490,7 +528,7 @@ function FormComponent() {
           <Box2 clicked={click} />
         </BackgroundBox>
       )}
-    </>
+    </div>
   )
 }
 

@@ -33,6 +33,7 @@ function Post({ post }) {
   const dispatch = useDispatch()
   const user = useSelector((state) => state.auth.newUser)
   const postId = post._id
+  const userId = user._id
 
   const postLiked = (id) => {
     axios
@@ -72,13 +73,20 @@ function Post({ post }) {
           postId:id
     }).then((response)=>{
       console.log(response);
+      toast.success(response.data, {
+        style: {
+          width: '80px',
+          height: '80px'
+        },
+      })
     })
   }
+  console.log(post.likedUsers,'junuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuunnnnnnn');
 
   useEffect(() => {
     {
-      {post.likedUsers?.includes(user._id)?setLiked(true):setLiked(false)}
-      {user.savedPost?.includes(post._id)?setSaved(true):setSaved(false)}
+      {post.likedUsers?.includes(userId)?setLiked(true):setLiked(false)}
+      {user.savedPost?.includes(postId)?setSaved(true):setSaved(false)}
     }
   }, [postId])
 

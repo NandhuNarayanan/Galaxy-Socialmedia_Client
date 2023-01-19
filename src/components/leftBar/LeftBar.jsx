@@ -60,9 +60,6 @@ function LeftBar() {
   };
 
   const handleLogout = () => {
-    axios.get(`http://localhost:3001/logout/${userid}`,{
-      headers:{authorization: token}
-    })
     dispatch(logOut())
     navigate('/login')
   }

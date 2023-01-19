@@ -1,0 +1,15 @@
+@import "../../style.scss";
+
+.box{
+    @include mobile{
+        height: 550px;
+        width: 700px;
+        
+    }
+
+    @include tablet{
+        height: 550px;
+        width: 700px;
+        
+    }
+}
