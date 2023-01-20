@@ -76,8 +76,9 @@ function Modals({ open, close }) {
           .then((response) => {
             toast.success(response.data, {
               style: {
-                width: '80px',
+                width: '200px',
                 height: '80px',
+                fontSize:'15px'
               },
             })
           })
@@ -92,7 +93,7 @@ function Modals({ open, close }) {
         cloudName: 'dnz0safyt',
         uploadPreset: 'zwmavdgu',
         multiple: false, // restrict upload to a single file
-        clientAllowedFormats: ['images', 'png', 'webp', 'jpeg'], // restrict uploading to image files only
+        clientAllowedFormats: ['images', 'png', 'webp', 'jpeg','JPG'], // restrict uploading to image files only
       },
       function (err, result) {
         if (!err && result && result.event === 'success') {

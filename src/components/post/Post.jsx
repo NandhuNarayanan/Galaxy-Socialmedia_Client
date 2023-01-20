@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import './post.scss'
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder'
 import FavoriteIcon from '@mui/icons-material/Favorite'
-import { MessageCircle2 } from 'tabler-icons-react'
+import { ChevronsDownLeft, MessageCircle2 } from 'tabler-icons-react'
 import SendIcon from '@mui/icons-material/Send'
 import Comments from '../comments/Comments'
 import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder'
@@ -20,6 +20,7 @@ import MoreVertIcon from '@mui/icons-material/MoreVert'
 import UserReport from '../postReportTable/UserReport'
 
 function Post({ post }) {
+  console.log(post,"psot for lidke")
   const [commentOpen, setCommentOpen] = useState(false)
   const [liked, setLiked] = useState(false)
   const [likeCount, setLikeCount] = useState(post.likedUsers?.length)
@@ -82,10 +83,13 @@ function Post({ post }) {
 
   useEffect(() => {
     {
+      // post.likedUsers?.findIndex((val)=>)
       {post.likedUsers?.includes(userId)?setLiked(true):setLiked(false)}
       {user.savedPost?.includes(postId)?setSaved(true):setSaved(false)}
     }
-  }, [postId])
+  }, [])
+
+  console.log(post.likedUsers?.includes(userId),"===============")
 
   const profileId = () => {
     localStorage.setItem('profileId', post.userId._id)

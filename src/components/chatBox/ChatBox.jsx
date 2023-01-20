@@ -12,6 +12,8 @@ function ChatBox({ chat, currentUser, setSendMessage, recieveMessage }) {
   const [newMessage, setNewMessage] = useState('')
   const scroll = useRef()
 
+  console.log(messages,'messagesss');
+  console.log(userData,'userData');
 
   useEffect(()=>{
     if (recieveMessage !== null && recieveMessage?.chatId === chat?._id) {
@@ -25,6 +27,7 @@ function ChatBox({ chat, currentUser, setSendMessage, recieveMessage }) {
     const getUserData = async () => {
       try {
         const { data } = await getUser(userId)
+        console.log(data,'daataa');
         setUserData(data)
       } catch (error) {
         console.log(error)
@@ -49,15 +52,15 @@ function ChatBox({ chat, currentUser, setSendMessage, recieveMessage }) {
     setNewMessage(newMessage)
   }
 
-  const handleSend = async (event)=> {
-    event.preventDefault();
+  const handleSend = async ()=> {
+    if (newMessage.trim().length === 0) return 
     const message = {
         senderId: currentUser,
         text: newMessage,
         chatId: chat._id,
     
     }
-    if (message.text==="") {
+    if (message.text==="" ) {
      const {data} = newMessage()
     }else{
       
@@ -81,6 +84,7 @@ function ChatBox({ chat, currentUser, setSendMessage, recieveMessage }) {
     scroll.current?.scrollIntoView({behavior: "smooth"})
   },[messages])
 
+  
   return (
     <>
       <div className="ChatBox-container">
@@ -91,7 +95,7 @@ function ChatBox({ chat, currentUser, setSendMessage, recieveMessage }) {
               <div>
                 {userData?.newUser.profilePicture ? (
                   <img
-                    src={userData.newUser.profilePicture}
+                    src={userData?.newUser.profilePicture}
                     alt=""
                     className="followersImage"
                     
@@ -104,10 +108,10 @@ function ChatBox({ chat, currentUser, setSendMessage, recieveMessage }) {
                     
                   />
                 )}
+              </div>
                 <div className="chatName">
                   <span>{userData?.newUser.firstName}</span>
                 </div>
-              </div>
             </div>
             <div className="chat-body">
               {messages.map((message) => (
@@ -128,7 +132,7 @@ function ChatBox({ chat, currentUser, setSendMessage, recieveMessage }) {
             </div>
             <div className="chat-sender">
               <div>+</div>
-              <InputEmoji value={newMessage} onChange={handleChange} />
+              <InputEmoji value={newMessage} onEnter={handleSend}  onChange={handleChange} />
               <div className="send-button button" onClick={handleSend}>Send</div>
             </div>
           </>

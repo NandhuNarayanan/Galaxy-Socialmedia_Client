@@ -7,7 +7,8 @@ import './posts.scss'
 function PostComponents() {
 
     const [posts, setPosts] = useState([])
-    // const refresh = useSelector((state) => state.refresh.refresh);
+    const refresh = useSelector((state) => state.refresh);
+    console.log(refresh,'refreshhh');
 
 
 

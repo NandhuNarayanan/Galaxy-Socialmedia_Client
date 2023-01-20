@@ -4,6 +4,7 @@ import authReducer from '../features/auth/authSlice';
 import profileReducer from '../features/pofileSlice';
 import postReducer from '../features/postSlice';
 import adminReducer from '../features/auth/adminSlice';
+import refreshReducer from '../features/auth/RefreshSlice'
 
 
 
@@ -14,6 +15,7 @@ export const store = configureStore({
         profileId:profileReducer,
         post:postReducer,
         admin:adminReducer,
+        refresh:refreshReducer,
     },
     middleware: getDefaultMiddleware =>
     getDefaultMiddleware().concat(apiSlice.middleware),

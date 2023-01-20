@@ -66,7 +66,7 @@ function Suggestion({ user}) {
     useEffect(()=>{
       // const token = localStorage.getItem('auth')
 
-      axios.get(`${REACT_APP_BACKEND_URL}/getUsers/${userid}`,{headers:{authorization:`bearer ${token}`}}).then((response)=>{
+      axios.get(`${process.env.REACT_APP_BACKEND_URL}/getUsers/${userid}`,{headers:{authorization:`bearer ${token}`}}).then((response)=>{
         if(response.data){
           // setFollowCheck(response.data.newUser?.following)
           setfollowCount(response.data.newUser?.following.length)
