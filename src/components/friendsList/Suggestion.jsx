@@ -49,7 +49,7 @@ function Suggestion({ user}) {
   const userId = loginUser._id
 
   const follow = (followUserId)=>{
-      axios.patch('http://localhost:3001/profile/follow',{
+      axios.patch(`${process.env.REACT_APP_BACKEND_URL}/profile/follow`,{
       followUserId,user
       }).then((response)=>{
         if (response.data.followingUser) {
@@ -66,7 +66,7 @@ function Suggestion({ user}) {
     useEffect(()=>{
       // const token = localStorage.getItem('auth')
 
-      axios.get(`http://localhost:3001/getUsers/${userid}`,{headers:{authorization:`bearer ${token}`}}).then((response)=>{
+      axios.get(`${REACT_APP_BACKEND_URL}/getUsers/${userid}`,{headers:{authorization:`bearer ${token}`}}).then((response)=>{
         console.log(response,"ooo")
         if(response.data){
           console.log(response.data.newUser?.following,'99')

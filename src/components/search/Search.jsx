@@ -42,7 +42,7 @@ export default function BasicModal({open,close}) {
 
   useEffect(()=>{
     console.log('adffdf', search)
-    axios.post('http://localhost:3001/profile/searchUser',{
+    axios.post(`${process.env.REACT_APP_BACKEND_URL}/profile/searchUser`,{
       search
     }).then((response)=>{
       console.log(response);

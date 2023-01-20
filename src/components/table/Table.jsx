@@ -38,7 +38,7 @@ function Cards() {
   const getUsers = async () => {
     try {
       await axios
-        .get('http://localhost:3001/admin/getUsers')
+        .get(`${process.env.REACT_APP_BACKEND_URL}/admin/getUsers`)
         .then((response) => {
           console.log(response)
           setUserData(response.data.allUsers)
@@ -53,7 +53,7 @@ function Cards() {
     console.log(userId, 'userrrrrrrrriiiidddddd')
     try {
       await axios
-        .patch('http://localhost:3001/admin/blockUser', {
+        .patch(`${process.env.REACT_APP_BACKEND_URL}/admin/blockUser`, {
           userId,
         })
         .then((response) => {

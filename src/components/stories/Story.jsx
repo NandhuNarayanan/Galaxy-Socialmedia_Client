@@ -90,7 +90,7 @@ const uploadStoryImage = () => {
       console.log(response)
       const storyUrl = response.data.secure_url
       return axios
-      .post('http://localhost:3001/story/uploadStory', {
+      .post(`${process.env.REACT_APP_BACKEND_URL}/story/uploadStory`, {
         storyUrl,
         userId,
       })

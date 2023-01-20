@@ -37,7 +37,7 @@ function Post({ post }) {
 
   const postLiked = (id) => {
     axios
-      .patch('http://localhost:3001/post/liked', {
+      .patch(`${process.env.REACT_APP_BACKEND_URL}/post/liked`, {
         userId: user._id,
         postId: id,
       })
@@ -53,7 +53,7 @@ function Post({ post }) {
   }
   const postSaved = (id) => {
     axios
-      .patch('http://localhost:3001/post/savedPost', {
+      .patch(`${process.env.REACT_APP_BACKEND_URL}/post/savedPost`, {
         SavedUserId: user._id,
         savePostId: id,
       })
@@ -69,7 +69,7 @@ function Post({ post }) {
   }
 
   const postDelete = (id) => {
-    axios.patch('http://localhost:3001/post/deletePost',{
+    axios.patch(`${process.env.REACT_APP_BACKEND_URL}/post/deletePost`,{
           postId:id
     }).then((response)=>{
       console.log(response);

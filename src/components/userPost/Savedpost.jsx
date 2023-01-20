@@ -7,7 +7,7 @@ function Savedpost({userId}) {
     const [savedPosts, setSavedPosts] = useState([])
 
     useEffect(()=>{
-        axios.get(`http://localhost:3001/post/getSavedPost/${userId}/`).then((response)=>{
+        axios.get(`${process.env.REACT_APP_BACKEND_URL}/post/getSavedPost/${userId}/`).then((response)=>{
                 console.log(response,'Saved Post is Here');
                 setSavedPosts(response.data)
             })

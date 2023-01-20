@@ -36,7 +36,7 @@ function Cards() {
   const getReportPost = async () => {
     try {
       await axios
-        .get('http://localhost:3001/admin/reportPost')
+        .get('http://galaxy.kingsteruniversity.site/admin/reportPost')
         .then((response) => {
           console.log(response)
           setPostData(response.data.reportedPosts)
@@ -50,7 +50,7 @@ function Cards() {
   const removePost = (async(postId)=>{
     console.log(postId);
     try {
-      await axios.patch('http://localhost:3001/admin/removePost',{
+      await axios.patch(`${process.env.REACT_APP_BACKEND_URL}/admin/removePost`,{
         postId
       })
     } catch (error) {
@@ -61,7 +61,7 @@ function Cards() {
   const declinePost = (async(postId)=>{
     console.log(postId);
     try {
-      await axios.post('http://localhost:3001/admin/declinePost',{
+      await axios.post(`${process.env.REACT_APP_BACKEND_URL}/admin/declinePost`,{
         postId
       })
     } catch (error) {

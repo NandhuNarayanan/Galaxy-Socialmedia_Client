@@ -270,7 +270,7 @@ function FormComponent() {
     e.preventDefault()
 
     try {
-     await axios.post('http://localhost:3001/login',
+     await axios.post(`${process.env.process.env.REACT_APP_BACKEND_URL}/login`,
       {
        email:user,
        password
@@ -310,7 +310,7 @@ function FormComponent() {
   }
 
   const onSubmit = (values) => {
-   axios.post('http://localhost:3001/signup',
+   axios.post(`${process.env.REACT_APP_BACKEND_URL}/signup`,
    {
     values
    }).then((response)=> {
@@ -364,7 +364,7 @@ function FormComponent() {
     console.log('Encoded JWT ID token:' + response.credential);
     let userObject = jwt_decode(response.credential);
     console.log(userObject);
-    axios.post('http://localhost:3001/google',{
+    axios.post(`${process.env.REACT_APP_BACKEND_URL}/google`,{
         userObject
     }).then((response)=>{
       console.log(response);

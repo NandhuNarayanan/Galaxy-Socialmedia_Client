@@ -12,7 +12,7 @@ function PostComponents() {
 
 
     useEffect(()=>{
-        axios.get('http://localhost:3001/post/getpost').then((response)=>{
+        axios.get(`${process.env.REACT_APP_BACKEND_URL}/post/getpost`).then((response)=>{
             setPosts(response.data)
         })
         

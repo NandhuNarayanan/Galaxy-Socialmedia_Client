@@ -17,7 +17,7 @@ function StoryComponents() {
 
     
     useEffect(()=>{
-        axios.get('http://localhost:3001/story/getStory').then((response)=>{
+        axios.get(`${process.env.REACT_APP_BACKEND_URL}/story/getStory`).then((response)=>{
             console.log(response);
             setShowStory(response.data)
         })

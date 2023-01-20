@@ -37,7 +37,7 @@ export default function UserReport({open,close,postId}) {
   
     const handleSubmit = (event) => {
       event.preventDefault();
-        axios.post('http://localhost:3001/post/userReport',{
+        axios.post(`${process.env.REACT_APP_BACKEND_URL}/post/userReport`,{
             value,
             postId
         }).then((response)=>{

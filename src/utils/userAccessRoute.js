@@ -9,7 +9,7 @@ const UserAccessRouter = () => {
   const userToken = localStorage.getItem("auth");
   useEffect(() => {
     axios
-      .get(`${process.env.REACT_APP_BACKEND_URL}/userAccessCheck`, {
+      .get(`${process.env.process.env.REACT_APP_BACKEND_URL}/userAccessCheck`, {
         headers: { authorization: userToken },
       })
       .then((response) => {

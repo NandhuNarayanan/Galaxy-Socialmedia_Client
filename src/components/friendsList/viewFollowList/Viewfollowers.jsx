@@ -41,7 +41,7 @@ const navigate = useNavigate()
   }
 
 useEffect(()=>{
-    axios.get(`http://localhost:3001/profile/userList/${profileId}`).then((response)=>{
+    axios.get(`${REACT_APP_BACKEND_URL}/profile/userList/${profileId}`).then((response)=>{
         console.log(response,'userlist')
         setUserList(response.data.followersList)
         setUserFollowingList(response.data.followingList)

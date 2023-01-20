@@ -70,7 +70,7 @@ function Modals({ open, close }) {
         console.log(response)
         const url = response.data.secure_url
         return axios
-          .post('http://localhost:3001/post/uploadpost', {
+          .post(`${process.env.REACT_APP_BACKEND_URL}/post/uploadpost`, {
             url,
             userId,
             caption,

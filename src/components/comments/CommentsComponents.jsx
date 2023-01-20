@@ -19,7 +19,7 @@ function CommentComponents({ postId }) {
       console.log('huhaaahbbaaaabiii')
     } else {
       axios
-        .post('http://localhost:3001/post/comment', {
+        .post(`${REACT_APP_BACKEND_URL}/post/comment`, {
           postId,
           userId,
           content: comment,
@@ -34,7 +34,7 @@ function CommentComponents({ postId }) {
   const deleteComment = (postCommentId, commentId) => {
     console.log(postCommentId, 'ssss', commentId)
     axios
-      .patch('http://localhost:3001/post/deleteComment', {
+      .patch(`${REACT_APP_BACKEND_URL}/post/deleteComment`, {
         postCommentId,
         commentId,
       })
@@ -45,7 +45,7 @@ function CommentComponents({ postId }) {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:3001/post/getComments/${postId}`)
+      .get(`${REACT_APP_BACKEND_URL}/post/getComments/${postId}`)
       .then((response) => {
         console.log('response of comment', response)
         setAllcomments(response.data)

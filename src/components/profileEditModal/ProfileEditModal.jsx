@@ -114,7 +114,7 @@ function profileEditModal({ open, close }) {
   const editInfo = (event) => {
     event.preventDefault()
     axios
-      .patch('http://localhost:3001/profile/editProfile', {
+      .patch(`${process.env.REACT_APP_BACKEND_URL}/profile/editProfile`, {
         fname,
         bio,
         location,
@@ -149,7 +149,7 @@ function profileEditModal({ open, close }) {
         if (!err && result && result.event === 'success') {
           const url = result.info.secure_url
           axios
-            .patch('http://localhost:3001/profile/profilePicture', {
+            .patch(`${process.env.REACT_APP_BACKEND_URL}/profile/profilePicture`, {
               url,
               user,
             })
@@ -175,7 +175,7 @@ function profileEditModal({ open, close }) {
         console.log(response)
         const storyUrl = response.data.secure_url
         return axios
-        .post('http://localhost:3001/profile/uploadCover', {
+        .post(`${process.env.REACT_APP_BACKEND_URL}/profile/uploadCover`, {
           storyUrl,
           user,
         })

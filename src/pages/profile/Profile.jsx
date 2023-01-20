@@ -46,14 +46,14 @@ function Profile() {
 
 
   const profileGet =async () => {
-    await axios.get(`http://localhost:3001/profile/${profile}`).then((response)=>{
+    await axios.get(`http://galaxy.kingsteruniversity.site/profile/${profile}`).then((response)=>{
       setGetProfile(response.data)
     })
   }
 
   const createChatRoom = async () => {
     try {
-   const {data}  = await axios.post('http://localhost:3001/chat',{
+   const {data}  = await axios.post('http://galaxy.kingsteruniversity.site/chat',{
       senderId:user,
       receiverId:id
     })
@@ -65,7 +65,7 @@ function Profile() {
   }
 
   useEffect(()=>{
-    axios.get(`http://localhost:3001/post/getUserPost/${id}`).then((response)=>{
+    axios.get(`http://galaxy.kingsteruniversity.site/post/getUserPost/${id}`).then((response)=>{
             console.log(response,'userPost is Here');
             setUserPosts(response.data)
         })

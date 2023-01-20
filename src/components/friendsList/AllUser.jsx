@@ -10,7 +10,7 @@ function AllUser() {
 
 
   useEffect(()=>{
-    axios.get(`http://localhost:3001/getAllUsers/${loginUser}`,{headers:{authorization:`bearer ${token}`}}).then((response)=>{
+    axios.get(`${process.env.REACT_APP_BACKEND_URL}/getAllUsers/${loginUser}`,{headers:{authorization:`bearer ${token}`}}).then((response)=>{
         setAllUser(response.data)
     })
 },[])
