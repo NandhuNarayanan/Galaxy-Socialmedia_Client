@@ -8,7 +8,6 @@ function Explore() {
 
     useEffect(()=>{
         axios.get(`${process.env.REACT_APP_BACKEND_URL}/post/getpost`).then((response)=>{
-            console.log(response.data);
             setExplore(response.data)
         })
     },[])

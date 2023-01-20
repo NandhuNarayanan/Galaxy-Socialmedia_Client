@@ -38,7 +38,6 @@ function ChatBox({ chat, currentUser, setSendMessage, recieveMessage }) {
       try {
         const { data } = await getMessages(chat._id)
         setMessages(data)
-        console.log(data)
       } catch (error) {
         console.log(error)
       }

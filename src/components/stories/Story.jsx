@@ -78,30 +78,25 @@ const storyRef = useRef()
 
 const uploadStoryImage = () => {
   const formData = new FormData()
-  console.log(storyImageSelected)
   formData.append('file', storyImageSelected)
-  formData.append('upload_preset', 'qogu1l1i')
+  formData.append('upload_preset', `${process.env.REACT_APP_CLOUDINARY_STORY_CODE}`)
 
   axios
-    .post('https://api.cloudinary.com/v1_1/dnz0safyt/image/upload', 
+    .post(`${process.env.REACT_APP_CLOUDINARY_API_URL}`, 
     formData
     )
-    .then((response) => {
-      console.log(response)
+    .then(async (response) => {
       const storyUrl = response.data.secure_url
-      return axios
-      .post(`${process.env.REACT_APP_BACKEND_URL}/story/uploadStory`, {
-        storyUrl,
-        userId,
-      })
-      .then((response) => {
-        console.log(response)
-        toast.success(response.data, {
-          style: {
-            width: '80px',
-            height: '80px'
-          },
+      const response_1 = await axios
+        .post(`${process.env.REACT_APP_BACKEND_URL}/story/uploadStory`, {
+          storyUrl,
+          userId,
         })
+      toast.success(response_1.data, {
+        style: {
+          width: '80px',
+          height: '80px'
+        },
       })
     })
   close(false)

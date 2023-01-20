@@ -58,7 +58,6 @@ function Post({ post }) {
         savePostId: id,
       })
       .then((response) => {
-        console.log(response,'huhuhoooooooooooooooooo')
         if (response.data.savePost) {
           setSaved(true)
         } else if (response.data.unSave) {
@@ -72,7 +71,6 @@ function Post({ post }) {
     axios.patch(`${process.env.REACT_APP_BACKEND_URL}/post/deletePost`,{
           postId:id
     }).then((response)=>{
-      console.log(response);
       toast.success(response.data, {
         style: {
           width: '80px',
@@ -81,7 +79,6 @@ function Post({ post }) {
       })
     })
   }
-  console.log(post.likedUsers,'junuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuunnnnnnn');
 
   useEffect(() => {
     {

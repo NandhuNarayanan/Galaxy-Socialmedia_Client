@@ -43,7 +43,7 @@ const input = {
   height: '8vh',
 }
 const icons = {
-  fontSize:'14px',
+  fontSize: '14px',
 }
 
 function Modals({ open, close }) {
@@ -60,14 +60,12 @@ function Modals({ open, close }) {
   }
   const uploadImage = () => {
     const formData = new FormData()
-    console.log(imageSelected)
     formData.append('file', imageSelected)
-    formData.append('upload_preset', 'zwmavdgu')
+    formData.append('upload_preset', `${process.env.REACT_APP_CLOUDINARY_CODE}`)
 
     axios
-      .post('https://api.cloudinary.com/v1_1/dnz0safyt/image/upload', formData)
+      .post(`${process.env.REACT_APP_CLOUDINARY_API_URL}`, formData)
       .then((response) => {
-        console.log(response)
         const url = response.data.secure_url
         return axios
           .post(`${process.env.REACT_APP_BACKEND_URL}/post/uploadpost`, {
@@ -79,10 +77,9 @@ function Modals({ open, close }) {
             toast.success(response.data, {
               style: {
                 width: '80px',
-                height: '80px'
+                height: '80px',
               },
             })
-            console.log(response)
           })
       })
     close(false)
@@ -132,9 +129,9 @@ function Modals({ open, close }) {
             />
             <div style={icons} onClick={openWidget} className="icons">
               <Fab color="primary" aria-label="add">
-                <ImageSharpIcon  />
+                <ImageSharpIcon />
               </Fab>
-                <span>Select Image</span>
+              <span>Select Image</span>
             </div>
             <img
               style={{ height: '300px', objectFit: 'cover' }}

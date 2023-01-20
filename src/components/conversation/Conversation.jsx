@@ -3,7 +3,6 @@ import { getUser } from '../../app/api/chatRequests'
 import './conversation.scss'
 
 function Conversation({ data, currentUser, online }) {
-  console.log(currentUser,'currentUser');
   const [userData, setUserData] = useState(null)
 
   useEffect(() => {

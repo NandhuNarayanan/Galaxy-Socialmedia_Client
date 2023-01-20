@@ -23,8 +23,6 @@ const auth = useSelector(state =>state.auth)
 
 const admin = useSelector(state =>state.admin)
 
-console.log(auth,'auth');
-
 
   const currentUser =auth.token;
 

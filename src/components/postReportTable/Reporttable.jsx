@@ -36,9 +36,8 @@ function Cards() {
   const getReportPost = async () => {
     try {
       await axios
-        .get('http://galaxy.kingsteruniversity.site/admin/reportPost')
+        .get(`${process.env.REACT_APP_BACKEND_URL}/admin/reportPost`)
         .then((response) => {
-          console.log(response)
           setPostData(response.data.reportedPosts)
           setFilterPost(response.data.reportedPosts)
         })
@@ -48,7 +47,6 @@ function Cards() {
   }
 
   const removePost = (async(postId)=>{
-    console.log(postId);
     try {
       await axios.patch(`${process.env.REACT_APP_BACKEND_URL}/admin/removePost`,{
         postId
@@ -59,7 +57,6 @@ function Cards() {
   })
 
   const declinePost = (async(postId)=>{
-    console.log(postId);
     try {
       await axios.post(`${process.env.REACT_APP_BACKEND_URL}/admin/declinePost`,{
         postId
@@ -101,7 +98,6 @@ function Cards() {
         cell: (row) => <button style={DeclineButton} onClick={()=> declinePost(row.postId._id)}>Decline</button>,
       },
   ]
-  console.log(postData,'aseadsafsdwscsweadcas')
 
   useEffect(() => {
     getReportPost()

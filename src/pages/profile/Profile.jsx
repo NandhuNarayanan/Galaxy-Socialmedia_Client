@@ -46,18 +46,17 @@ function Profile() {
 
 
   const profileGet =async () => {
-    await axios.get(`http://galaxy.kingsteruniversity.site/profile/${profile}`).then((response)=>{
+    await axios.get(`${process.env.REACT_APP_BACKEND_URL}/profile/${profile}`).then((response)=>{
       setGetProfile(response.data)
     })
   }
 
   const createChatRoom = async () => {
     try {
-   const {data}  = await axios.post('http://galaxy.kingsteruniversity.site/chat',{
+   const {data}  = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/chat`,{
       senderId:user,
       receiverId:id
     })
-    console.log(data);
     navigate('/chat')
     } catch (error) {
       console.log(error);
@@ -65,8 +64,7 @@ function Profile() {
   }
 
   useEffect(()=>{
-    axios.get(`http://galaxy.kingsteruniversity.site/post/getUserPost/${id}`).then((response)=>{
-            console.log(response,'userPost is Here');
+    axios.get(`${process.env.REACT_APP_BACKEND_URL}/post/getUserPost/${id}`).then((response)=>{
             setUserPosts(response.data)
         })
   },[id])

@@ -18,12 +18,11 @@ function StoryComponents() {
     
     useEffect(()=>{
         axios.get(`${process.env.REACT_APP_BACKEND_URL}/story/getStory`).then((response)=>{
-            console.log(response);
+            console.log(response,'qqqqqqqqqqrrrrrrrqqqqqqqqqq');
             setShowStory(response.data)
         })
     },[])
 
-    console.log(viewStory,'asdjadkjweuhdjsancsdh;vealiul');
 
   return (
 <div className='stories'>

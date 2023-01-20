@@ -26,7 +26,6 @@ const style = {
 
 
 function Viewfollowers({open,close,Viewfollowers,Viewfollowing, userFollowers}) {
-  console.log(Viewfollowers,'userFollowers');
 
 const [userList , setUserList] = useState([])
 const [userFollowingList , setUserFollowingList] = useState([])
@@ -41,15 +40,14 @@ const navigate = useNavigate()
   }
 
 useEffect(()=>{
-    axios.get(`${REACT_APP_BACKEND_URL}/profile/userList/${profileId}`).then((response)=>{
-        console.log(response,'userlist')
+    axios.get(`${process.env.REACT_APP_BACKEND_URL}/profile/userList/${profileId}`).then((response)=>{
         setUserList(response.data.followersList)
         setUserFollowingList(response.data.followingList)
 
     }).catch((e)=>console.log(e,"o"))
 },[])
    
-console.log(userList,"userList");
+
   return (
     <>
       <Modal

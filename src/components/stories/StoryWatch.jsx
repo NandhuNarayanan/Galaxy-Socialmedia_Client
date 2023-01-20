@@ -42,7 +42,7 @@ function StoryWatch({ showStory, openStory, closeStory }) {
 
   useEffect(() => {
     setTimeout(() => {
-      setIndex((index + 1) % showStory.getStories.length)
+      setIndex((index + 1) % showStory?.getStories?.length)
     }, 8000)
   }, [index])
 

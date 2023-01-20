@@ -40,7 +40,6 @@ function Cards() {
       await axios
         .get(`${process.env.REACT_APP_BACKEND_URL}/admin/getUsers`)
         .then((response) => {
-          console.log(response)
           setUserData(response.data.allUsers)
           setFilterUser(response.data.allUsers)
         })
@@ -50,14 +49,12 @@ function Cards() {
   }
 
   const blockUser = async (userId) => {
-    console.log(userId, 'userrrrrrrrriiiidddddd')
     try {
       await axios
         .patch(`${process.env.REACT_APP_BACKEND_URL}/admin/blockUser`, {
           userId,
         })
         .then((response) => {
-          console.log(response.data)
           setUserBlock(response.data.blockedUser)
         })
     } catch (error) {

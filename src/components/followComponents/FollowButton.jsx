@@ -58,11 +58,9 @@ function FollowButton({followUserId,isFollowed}) {
       // const token = localStorage.getItem('auth')
 
       axios.get(`${process.env.REACT_APP_BACKEND_URL}/getUsers/${userid}`,{headers:{authorization:`bearer ${token}`}}).then((response)=>{
-        console.log(response,"ooo")
         if(response.data){
-          console.log(response.data.newUser?.following,'99')
           // setFollowCheck(response.data.newUser?.following)
-          // console.log(followCheck,90)
+          
           setfollowCount(response.data.newUser?.following.length)
           const status = response.data.newUser?.following?.includes(profile) 
           setFollowing(status)

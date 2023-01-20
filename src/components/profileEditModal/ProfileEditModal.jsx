@@ -137,8 +137,8 @@ function profileEditModal({ open, close }) {
     CloudinaryRef.current = window.cloudinary
     widgetRef.current = CloudinaryRef.current.createUploadWidget(
       {
-        cloudName: 'dnz0safyt',
-        uploadPreset: 'zwmavdgu',
+        cloudName: `${process.env.REACT_APP_CLOUDINARY_NAME}`,
+        uploadPreset: `${process.env.REACT_APP_CLOUDINARY_CODE}`,
         cropping: true,
         sources: ['local', 'camera'],
         folder: 'user_profile',
@@ -163,16 +163,14 @@ function profileEditModal({ open, close }) {
 
   const uploadCoverImage = () => {
     const formData = new FormData()
-    console.log(storyImageSelected)
     formData.append('file', storyImageSelected)
-    formData.append('upload_preset', 'k4obttho')
+    formData.append('upload_preset', `${process.env.REACT_APP_CLOUDINARY_IMAGE_CODE}`)
   
     axios
-      .post('https://api.cloudinary.com/v1_1/dnz0safyt/image/upload', 
+      .post(`${process.env.REACT_APP_CLOUDINARY_API_URL}`, 
       formData
       )
       .then((response) => {
-        console.log(response)
         const storyUrl = response.data.secure_url
         return axios
         .post(`${process.env.REACT_APP_BACKEND_URL}/profile/uploadCover`, {

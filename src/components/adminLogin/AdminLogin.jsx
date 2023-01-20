@@ -19,7 +19,6 @@ function AdminLogin() {
       email:admin,
       password
     }).then((response)=> {
-      console.log(response);
       dispatch(setAdminCredentials(response.data))
       navigate('/adminHome')
     })

@@ -7,19 +7,16 @@ import { useSelector } from 'react-redux'
 import { format } from 'timeago.js'
 
 function CommentComponents({ postId }) {
-  console.log(postId, 'prop')
 
   const userId = useSelector((state) => state.auth.newUser._id)
-  console.log(userId)
   const [comment, setComment] = useState('')
   const [allComments, setAllcomments] = useState({})
 
   const postComment = () => {
     if (comment.trim() === '') {
-      console.log('huhaaahbbaaaabiii')
     } else {
       axios
-        .post(`${REACT_APP_BACKEND_URL}/post/comment`, {
+        .post(`${process.env.REACT_APP_BACKEND_URL}/post/comment`, {
           postId,
           userId,
           content: comment,
@@ -32,9 +29,8 @@ function CommentComponents({ postId }) {
   }
 
   const deleteComment = (postCommentId, commentId) => {
-    console.log(postCommentId, 'ssss', commentId)
     axios
-      .patch(`${REACT_APP_BACKEND_URL}/post/deleteComment`, {
+      .patch(`${process.env.REACT_APP_BACKEND_URL}/post/deleteComment`, {
         postCommentId,
         commentId,
       })
@@ -45,14 +41,12 @@ function CommentComponents({ postId }) {
 
   useEffect(() => {
     axios
-      .get(`${REACT_APP_BACKEND_URL}/post/getComments/${postId}`)
+      .get(`${process.env.REACT_APP_BACKEND_URL}/post/getComments/${postId}`)
       .then((response) => {
-        console.log('response of comment', response)
         setAllcomments(response.data)
       })
   }, [comment])
 
-  console.log(allComments,'aaaaaallllllllllllllllllaaaaa');
   return (
     <>
       <div className="comments">

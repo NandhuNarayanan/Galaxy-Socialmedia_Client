@@ -24,7 +24,6 @@ const style = {
 };
 
 export default function UserReport({open,close,postId}) {
-    console.log(postId,'possrrrr');
     const [value, setValue] = React.useState('');
     const [error, setError] = React.useState(false);
     const [helperText, setHelperText] = React.useState('Choose wisely');
