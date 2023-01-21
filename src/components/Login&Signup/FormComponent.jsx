@@ -12,8 +12,7 @@ import { useFormik } from 'formik'
 import axios from 'axios'
 import imgLogo from '../../assets/image/logo_for_galaxy1.png'
 import './formcomponent.scss'
-
-
+import { toast } from 'react-hot-toast'
 
 const move = keyframes`
 0%{
@@ -256,7 +255,6 @@ function FormComponent() {
   const [errMsg, setErrMsg] = useState('')
   const navigate = useNavigate()
 
-
   const [login, { isLoading }] = useLoginMutation()
   const dispatch = useDispatch()
 
@@ -264,33 +262,65 @@ function FormComponent() {
     setErrMsg('')
   }, [user, password])
 
-  
-
   const handleSubmit = async (e) => {
     e.preventDefault()
 
     try {
-     await axios.post(`${process.env.REACT_APP_BACKEND_URL}/login`,
-      {
-       email:user,
-       password
-      }).then((response)=>{
-         dispatch(setCredentials(response.data))
-      setUser('')
-      setPassword('')
-      navigate('/home')
-
-      })
-     
+      await axios
+        .post(`${process.env.REACT_APP_BACKEND_URL}/login`, {
+          email: user,
+          password,
+        })
+        .then((response) => {
+          dispatch(setCredentials(response.data))
+          setUser('')
+          setPassword('')
+          navigate('/home')
+          toast.success(response.data === 200, {
+            style: {
+              width: '200px',
+              height: '80px',
+              fontSize: '15px',
+            },
+          })
+        })
     } catch (err) {
       if (!err?.response) {
         setErrMsg('No Server Response')
+        toast.error('No Server Response', {
+          style: {
+            width: '200px',
+            height: '80px',
+            fontSize: '15px',
+          },
+        })
       } else if (err.response?.status === 400) {
         setErrMsg('Missing Username or Password')
+        toast.error('Missing Username or Password', {
+          style: {
+            width: '200px',
+            height: '80px',
+            fontSize: '15px',
+          },
+        })
       } else if (err.response?.status === 401) {
         setErrMsg('Unauthorized')
+        toast.error('Unauthorized', {
+          style: {
+            width: '200px',
+            height: '80px',
+            fontSize: '15px',
+          },
+        })
       } else {
         setErrMsg('Login Failed')
+        toast.error('Login Failed', {
+          style: {
+            width: '200px',
+            height: '80px',
+            fontSize: '15px',
+          },
+        })
       }
     }
   }
@@ -310,16 +340,18 @@ function FormComponent() {
   }
 
   const onSubmit = (values) => {
-   axios.post(`${process.env.REACT_APP_BACKEND_URL}/signup`,
-   {
-    values
-   }).then((response)=> {
-    navigate('/home')
-    dispatch(setCredentials(response.data))
-    dispatch(setCredentials(response.data.newUser))
-   }).catch((error)=>{
-    console.log(error);
-   })
+    axios
+      .post(`${process.env.REACT_APP_BACKEND_URL}/signup`, {
+        values,
+      })
+      .then((response) => {
+        navigate('/home')
+        dispatch(setCredentials(response.data))
+        dispatch(setCredentials(response.data.newUser))
+      })
+      .catch((error) => {
+        console.log(error)
+      })
   }
 
   const validate = (values) => {
@@ -357,40 +389,41 @@ function FormComponent() {
     initialValues,
     onSubmit,
     validate,
-    
   })
 
   const handleCallbackResponse = (response) => {
-    let userObject = jwt_decode(response.credential);
-    axios.post(`${process.env.REACT_APP_BACKEND_URL}/google`,{
-        userObject
-    }).then((response)=>{
-      dispatch(setCredentials(response.data))
-      navigate('/home')
-
-    })
+    let userObject = jwt_decode(response.credential)
+    axios
+      .post(`${process.env.REACT_APP_BACKEND_URL}/google`, {
+        userObject,
+      })
+      .then((response) => {
+        dispatch(setCredentials(response.data))
+        navigate('/home')
+      })
   }
 
-  useEffect(()=>{
+  useEffect(() => {
     /* global google */
     google.accounts.id.initialize({
-      client_id: "420211100128-eauuv9qnga3a2g2134ph12g7h405c9rv.apps.googleusercontent.com",
-      callback: handleCallbackResponse
+      client_id:
+        '420211100128-eauuv9qnga3a2g2134ph12g7h405c9rv.apps.googleusercontent.com',
+      callback: handleCallbackResponse,
     })
 
-    google.accounts.id.renderButton(
-      document.getElementById("signInDiv"),
-      {theme:"outline", size:"large"}
-    );
-  },[])
+    google.accounts.id.renderButton(document.getElementById('signInDiv'), {
+      theme: 'outline',
+      size: 'large',
+    })
+  }, [])
 
   return (
-    <div className='component'>
+    <div className="component">
       {' '}
       {isLoading ? (
         <TouchBallLoading />
       ) : (
-        <BackgroundBox className='box' clicked={click}>
+        <BackgroundBox className="box" clicked={click}>
           <ButtonAnimate clicked={click} onClick={handleClick}></ButtonAnimate>
           <Form onSubmit={handleSubmit} className="signin">
             <Title>Sign In</Title>
@@ -413,9 +446,9 @@ function FormComponent() {
             />
             <Link href="#">Forgot Your Password?</Link>
             <Button>Sign In</Button>
-            <div style={{paddingTop:'2rem'}}>
-            <h3>Or</h3>
-            <div id="signInDiv"></div>
+            <div style={{ paddingTop: '2rem' }}>
+              <h3>Or</h3>
+              <div id="signInDiv"></div>
             </div>
           </Form>
 
@@ -495,14 +528,22 @@ function FormComponent() {
               Already have an Account
             </Link>
             <Button type="submit">Sign Up</Button>
-          
           </Form>
 
           <Text className="text1" clicked={click}>
-            <div className='logo' style={{marginBottom:'30px',fontSize:'32px'}}>
-            <h3><img style={{width:'60px',height:'60px'}} src={imgLogo} alt="" />Galaxy</h3>
+            <div
+              className="logo"
+              style={{ marginBottom: '30px', fontSize: '32px' }}
+            >
+              <h3>
+                <img
+                  style={{ width: '60px', height: '60px' }}
+                  src={imgLogo}
+                  alt=""
+                />
+                Galaxy
+              </h3>
             </div>
-            
             <h1>Welcome!</h1>
             Don't have an account ?
             <br />
@@ -511,8 +552,18 @@ function FormComponent() {
           </Text>
 
           <Text className="text2" clicked={click}>
-          <div className='logo' style={{marginBottom:'30px',fontSize:'32px'}}>
-            <h3><img style={{width:'60px',height:'60px'}} src={imgLogo} alt="" />Galaxy</h3>
+            <div
+              className="logo"
+              style={{ marginBottom: '30px', fontSize: '32px' }}
+            >
+              <h3>
+                <img
+                  style={{ width: '60px', height: '60px' }}
+                  src={imgLogo}
+                  alt=""
+                />
+                Galaxy
+              </h3>
             </div>
             <h1>Hi There!</h1>
             Already have an account ?

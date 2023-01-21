@@ -76,7 +76,7 @@ function FollowButton({followUserId,isFollowed}) {
   // },[])
   return (
     <div className="top" >
-      <button style={following ? followingButtonStyle : followButtonStyle } onClick={() => {follow(followUserId)}}>{following? 'Following' :  'Follow'  }</button>
+      <button style={following ? followButtonStyle : followingButtonStyle } onClick={() => {follow(followUserId)}}>{following? 'Follow' :  'Following'  }</button>
     </div>
   )
 }

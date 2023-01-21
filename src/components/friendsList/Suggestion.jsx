@@ -93,7 +93,7 @@ function Suggestion({ user}) {
       <span>{user.firstName}</span>
       <div className="buttons">
       <div className="top" >
-      <button style={following ? followingButtonStyle : followButtonStyle } onClick={() => {follow(followUserId)}}>{following? 'Following' :  'Follow'  }</button>
+      <button style={following ? followingButtonStyle : followButtonStyle  } onClick={() => {follow(followUserId)}}>{following? 'Following'  : 'Follow'    }</button>
     </div>
       </div>
     </div>
